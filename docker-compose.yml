@@ -1,0 +1,19 @@
+services:
+  ruby:
+    build:
+      context: .
+      args:
+        TARGET_IMAGE: "ruby:slim"
+    volumes_from:
+      - exercism-config
+  elixir:
+    build:
+      context: .
+      args:
+        TARGET_IMAGE: "elixir:alpine"
+    volumes_from:
+      - exercism-config
+  exercism-config:
+    image: alpine
+    volumes:
+      - $HOME/.config/exercism:/root/.config/exercism
