@@ -22,7 +22,7 @@ services:
       args:
         <<: *default-args
         TARGET_IMAGE: "ruby:alpine"
-    # working_dir: /home/exercist/exercism/ruby
+    working_dir: /home/exercist/exercism/ruby
 
   elixir:
     <<: *default
@@ -30,4 +30,4 @@ services:
       args:
         <<: *default-args
         TARGET_IMAGE: "elixir:alpine"
-    # working_dir: /home/exercist/exercism/elixir
+    working_dir: /home/exercist/exercism/elixir

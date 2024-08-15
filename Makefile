@@ -9,4 +9,4 @@ submit:
 	docker compose run -it --rm default exercism submit "${TARGET}"
 
 %:
-	docker compose run -it --rm $@ exercism download --track=$@ --exercise=hello-world
+	docker compose run -it --rm default exercism download --track=$@ --exercise=hello-world

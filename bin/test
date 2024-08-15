@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+language=$(echo $@ | cut -d '/' -f 1)
+exercise=$(echo $@ | cut -d '/' -f 2)
+docker compose run --rm -ti "$language" sh -c "cd '$exercise' && exercism test"
