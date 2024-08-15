@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+if [ ! -f .env ]; then
+  echo "UID=$(id -u)" >> .env
+  echo "GID=$(id -g)" >> .env
+fi
+
+token="$@"
+
+if [ -z "$token" ]; then
+  echo "Please paste your API / CLI token from https://exercism.org/settings/api_cli:"
+  read token
+fi
+docker compose run -it --rm default exercism configure --token "$token" --workspace=.
