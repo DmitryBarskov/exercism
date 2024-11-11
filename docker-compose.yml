@@ -16,14 +16,6 @@ services:
       - $HOME/.config:/home/exercist/.config
       - .:/home/exercist/exercism
 
-  ruby:
-    <<: *default
-    build:
-      args:
-        <<: *default-args
-        TARGET_IMAGE: "ruby:alpine"
-    working_dir: /home/exercist/exercism/ruby
-
   elixir:
     <<: *default
     build:
@@ -31,3 +23,19 @@ services:
         <<: *default-args
         TARGET_IMAGE: "elixir:alpine"
     working_dir: /home/exercist/exercism/elixir
+
+  java:
+    <<: *default
+    build:
+      args:
+        <<: *default-args
+        TARGET_IMAGE: gradle:jdk21-alpine
+    working_dir: /home/exercist/exercism/java
+
+  ruby:
+    <<: *default
+    build:
+      args:
+        <<: *default-args
+        TARGET_IMAGE: "ruby:alpine"
+    working_dir: /home/exercist/exercism/ruby
