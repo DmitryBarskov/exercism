@@ -215,3 +215,25 @@ ResponseHandling.handle_response({:error, 404})
 # FunctionClauseError will occur
 ResponseHandling.handle_response({:success, :fail})
 ```
+
+## high-school-sweetheart
+
+```elixir
+"Strings" <> " in " <> "Elixir"
+"Interpolation is #{6 * 7}"
+"""
+and multiline
+strings
+"""
+```
+
+### pipe operator
+
+Left operand of `|>` is passed as the first argument to next function call.
+
+```elixir
+"hey"
+|> String.upcase
+|> Kernel.<>("!")
+#=> HEY!
+```
