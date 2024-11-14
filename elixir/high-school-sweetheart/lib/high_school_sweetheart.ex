@@ -19,7 +19,8 @@ defmodule HighSchoolSweetheart do
 
   def pair(full_name1, full_name2) do
     i1 = initials(full_name1)
-    i2 = initials(full_name2) 
+    i2 = initials(full_name2)
+
     """
          ******       ******
        **      **   **      **

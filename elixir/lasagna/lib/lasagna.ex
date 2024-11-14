@@ -5,7 +5,8 @@ defmodule Lasagna do
 
   def preparation_time_in_minutes(layers), do: 2 * layers
 
-  def total_time_in_minutes(layers_added, minutes_in_oven), do: preparation_time_in_minutes(layers_added) + minutes_in_oven
+  def total_time_in_minutes(layers_added, minutes_in_oven),
+    do: preparation_time_in_minutes(layers_added) + minutes_in_oven
 
   def alarm(), do: "Ding!"
 end
