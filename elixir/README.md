@@ -119,7 +119,20 @@ ceil(10.1) #=> 11
 
 ## secrets
 
-<!-- TODO: add section -->
+Anonymous functions can be created, saved to a variable,
+returned from a function etc.
+
+```elixir
+function_variable = fn param ->
+  param + 1
+end
+
+function_variable.(1) # => 2
+
+short = &(&1 * &2 + &3)
+
+short.(5, 6, 7) #=> 37
+```
 
 ## log-level
 
@@ -323,3 +336,25 @@ end
 ## bird count
 
 Recursion + pattern matching + multiple function clauses = awesome
+
+## name badge
+
+There is `nil` in Elixir (same thing as `None`, `null` in other languages).
+
+There is `if` macro (which is expression):
+
+```elixir
+is_even = if Integer.mod(42, 2) do
+  :yes
+else
+  :no
+end
+
+is_even = if Integer.mod(42, 2), do: :yes, else: :no
+```
+
+`if` can take not only boolean values, but all values.
+But only `false` and `nil` behave as `false`, all other values behave as `true`.
+
+While `not`, `and` etc can be used only for boolean values,
+`!`, `&&`, `||` can be used for all values including booleans.
