@@ -106,7 +106,16 @@ not success?
 
 ## freelancer-rates
 
-<!-- TODO: add section -->
+There are `Float.floor`, `Float.ceil`, `Float.round`, `Kernel.floor`,
+`Kernel.ceil` and `Kernel.round` functions.
+
+Functions in `Float` module take 2 arguments and do rounding
+to the specified digit,
+while `Kernel` ones take one argument and round to an integer.
+```elixir
+Float.round(5.5675, 3) #=> 5.567
+ceil(10.1) #=> 11
+```
 
 ## secrets
 
