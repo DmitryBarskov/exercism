@@ -2,18 +2,12 @@ defmodule NameBadge do
   def print(id, name, department) do
     # This exercise includes `if` description, implying I should use it,
     # but i'd prefer cond or function with multiple clauses
-    if id && department do
-      "[#{id}] - #{name} - #{String.upcase(department)}"
+    printed_department = if department, do: String.upcase(department), else: "OWNER"
+
+    if id do
+      "[#{id}] - #{name} - #{printed_department}"
     else
-      if id do
-        "[#{id}] - #{name} - OWNER"
-      else
-        if department do
-          "#{name} - #{String.upcase(department)}"
-        else
-          "#{name} - OWNER"
-        end
-      end
+      "#{name} - #{printed_department}"
     end
   end
 
