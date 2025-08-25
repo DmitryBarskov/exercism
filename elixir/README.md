@@ -367,4 +367,14 @@ Since it is a list, it can have repeating keys.
 Keyword.get_values([a: 2, b: 3, a: 1], :a) #=> [2, 1]
 ```
 
-Pattern matching on a keyword-list
+Pattern matching on a keyword-list:
+```elixir
+defmodule KwList do
+  def matching([{:year, year} | rest]), do: ["Year is #{year}" | matching(rest)]
+  def matching([{:country, country} | rest]), do: ["Country is #{country}" | matching(rest)]
+  def matching(_), do: []
+end
+
+KwList.matching(year: 1988, country: "France", model: "A320") # can omit [ and ]
+#=> ["Year is 1988", "Country is France"]
+```

@@ -8,22 +8,16 @@ defmodule WineCellar do
   end
 
   def filter(cellar, color, opts \\ []) do
-    cellar
-    |> Enum.flat_map(fn {c, desc} -> if c == color, do: [desc], else: [] end)
-    |> filter_by_opts(opts)
+    Keyword.get_values(cellar, color)
+    |> filter_by_year_if_present(opts[:year])
+    |> filter_by_country_if_present(opts[:country])
   end
 
-  defp filter_by_opts(cellar, []), do: cellar
-  defp filter_by_opts(cellar, [{:year, year} | opts]) do
-    cellar
-    |> filter_by_year(year)
-    |> filter_by_opts(opts)
-  end
-  defp filter_by_opts(cellar, [{:country, country} | opts]) do
-    cellar
-    |> filter_by_country(country)
-    |> filter_by_opts(opts)
-  end
+  defp filter_by_year_if_present(cellar, nil), do: cellar
+  defp filter_by_year_if_present(cellar, year), do: filter_by_year(cellar, year)
+
+  defp filter_by_country_if_present(cellar, nil), do: cellar
+  defp filter_by_country_if_present(cellar, country), do: filter_by_country(cellar, country)
 
   # The functions below do not need to be modified.
 
