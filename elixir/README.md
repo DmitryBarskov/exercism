@@ -1,6 +1,6 @@
 # What I learned solving exercises in order
 
-## hello-world
+## [Hello world](./hello-world/README.md)
 
 * [`mix test` - Elixir's test execution tool](https://hexdocs.pm/mix/Mix.Tasks.Test.html)
 
@@ -62,7 +62,7 @@ defmodule BirdCount do
 end
 ```
 
-## lasagna
+## [Lasagna](./lasagna/README.md)
 
 Functions in Elixir must be in modules, `defmoudle` creates a moudle,
 `def` creates a function, `defp` creates a private function:
@@ -91,7 +91,7 @@ defmodule OneLiner do
 end
 ```
 
-## pacman-rules
+## [Pacman Rules](./pacman-rules/README.md)
 
 Variables are named in _snake_case_. They can end with `?` (question mark).
 Use values `true` and `false`, operators `and/2`, `or/2` and `not/1` for
@@ -104,7 +104,7 @@ success? or true
 not success?
 ```
 
-## freelancer-rates
+## [Freelancer Rates](./freelancer-rates/README.md)
 
 There are `Float.floor`, `Float.ceil`, `Float.round`, `Kernel.floor`,
 `Kernel.ceil` and `Kernel.round` functions.
@@ -117,24 +117,7 @@ Float.round(5.5675, 3) #=> 5.567
 ceil(10.1) #=> 11
 ```
 
-## secrets
-
-Anonymous functions can be created, saved to a variable,
-returned from a function etc.
-
-```elixir
-function_variable = fn param ->
-  param + 1
-end
-
-function_variable.(1) # => 2
-
-short = &(&1 * &2 + &3)
-
-short.(5, 6, 7) #=> 37
-```
-
-## log-level
+## [Log Level](./log-level/README.md)
 
 Use cond for if-else-if kind of logic.
 
@@ -150,7 +133,7 @@ Atoms are constants named as their values. They are like strings, but stored
 in lookup table in memory. For example `:ok, :error, :hello_world` are atoms.
 Values `true` and `false` are references to atoms `:true` and `:false`.
 
-## language-list
+## [Language List](./language-list/README.md)
 
 List is a built-in type in elixir implemneted by linked list. They can include
 different types.
@@ -185,17 +168,21 @@ language_list = LanguageList.new() # => []
 language_list = LanguageList.add(language_list, "Clojure") # => ["Clojure"]
 ```
 
-## guessing-game
+## [Secrets](./secrets/README.md)
 
-Creating anonymous function:
+Anonymous functions can be created, saved to a variable,
+returned from a function etc.
+
 ```elixir
-func = fn param ->
+function_variable = fn param ->
   param + 1
 end
-func.(1) = 2
 
-short = &(&1 + 1)
-short.(1) = 2
+function_variable.(1) # => 2
+
+short = &(&1 * &2 + &3)
+
+short.(5, 6, 7) #=> 37
 ```
 
 `Bitwise` module contains functions to manipulate bits:
@@ -251,7 +238,7 @@ def number_to_string(2, 2), do: "10"
 def number_to_string(3, 2), do: "11"
 ```
 
-## kitchen-calculator
+## [kitchen-calculator](./kitchen-calculator/README.md)
 
 Tuples are like immutable arrays that can hold values with different data types.
 These are tuples `{}`, `{42}`, `{:ok, 5, "hello"}`.
@@ -296,7 +283,7 @@ ResponseHandling.handle_response({:error, 404})
 ResponseHandling.handle_response({:success, :fail})
 ```
 
-## high-school-sweetheart
+## [High School Sweetheart](./high-school-sweetheart/README.md)
 
 ```elixir
 "Strings" <> " in " <> "Elixir"
@@ -318,7 +305,7 @@ Left operand of `|>` is passed as the first argument to next function call.
 #=> HEY!
 ```
 
-## rational numbers
+## [Rational Numbers](./rational-numbers/README.md)
 
 Learn about `Integer.pow`, `Float.pow`, `Kernel.abs`.
 
@@ -333,11 +320,11 @@ defmodule RationalNumbers do
 end
 ```
 
-## bird count
+## [Bird Count](./bird-count/README.md)
 
 Recursion + pattern matching + multiple function clauses = awesome
 
-## name badge
+## [Name Badge](./name-badge/README.md)
 
 There is `nil` in Elixir (same thing as `None`, `null` in other languages).
 
@@ -358,3 +345,26 @@ But only `false` and `nil` behave as `false`, all other values behave as `true`.
 
 While `not`, `and` etc can be used only for boolean values,
 `!`, `&&`, `||` can be used for all values including booleans.
+
+## [Wine Cellar](./wine-cellar/README.md)
+
+Keyword lists are a key-value data structure.
+
+```elixir
+[month: "April", year: 2018]
+```
+
+Keyword lists are lists of `{key, value}` tuples, and can also be written like:
+
+```elixir
+[month: "April"] == [{:month, "April"}] # => true
+```
+
+Since it is a list, it can have repeating keys.
+
+```elixir
+[a: 2, b: 3, a: 1][:a] #=> 2
+Keyword.get_values([a: 2, b: 3, a: 1], :a) #=> [2, 1]
+```
+
+Pattern matching on a keyword-list
