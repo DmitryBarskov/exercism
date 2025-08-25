@@ -19,11 +19,11 @@ ARG GID
 COPY --from=build /root/exercism /bin/exercism
 
 # Use instructions below for alpine based images
-RUN addgroup -g $GID exercist && \
-  adduser -S -u $UID -G exercist exercist
+RUN addgroup -g $GID exercist || \
+  adduser -S -u $UID -G $(getent group $GID | cut -d: -f1) exercist
 
 # Use instruction below for debian based images
-# RUN groupadd -g $GID exercist && \
+# RUN groupadd -g $GID exercist || \
 #  useradd -m -r -o -u $UID -g exercist exercist
 
 USER exercist

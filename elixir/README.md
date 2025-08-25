@@ -2,7 +2,37 @@
 
 ## hello-world
 
-<!-- TODO: Testing -->
+* [`mix test` - Elixir's test execution tool](https://hexdocs.pm/mix/Mix.Tasks.Test.html)
+
+`mix test` command runs tests.
+
+* [`ExUnit` - Elixir's unit test library](https://hexdocs.pm/ex_unit/ExUnit.html)
+
+File structure:
+```
+.
+├── lib
+│   └── hello_world.ex
+├── mix.exs
+└── test
+    ├── hello_world_test.exs
+    └── test_helper.exs
+```
+
+File `test_helper.exs` is optional:
+
+Test example:
+```elixir
+defmodule HelloWorldTest do
+  use ExUnit.Case
+
+  test "says 'Hello, World!'" do
+    assert HelloWorld.hello() == "Hello, World!"
+  end
+end
+```
+
+<!-- TODO: @doc @spec -->
 
 ## lasagna
 
@@ -237,3 +267,19 @@ Left operand of `|>` is passed as the first argument to next function call.
 |> Kernel.<>("!")
 #=> HEY!
 ```
+
+## rational numbers
+
+Learn about `Integer.pow`, `Float.pow`, `Kernel.abs`.
+
+If a function in the module has the same name as in `Kernel`, it must be referred
+with module name:
+
+```elixir
+defmodule RationalNumbers do
+  def abs({numerator, denominator}) do
+    {Kernel.abs(numerator), Kernel.abs(denominator)}
+  end
+end
+```
+G
