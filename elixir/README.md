@@ -32,7 +32,35 @@ defmodule HelloWorldTest do
 end
 ```
 
-<!-- TODO: @doc @spec -->
+`@doc` decorator defines a documentation string for a function:
+```elixir
+defmodule SomeModule do
+  @doc "Prints 'Hello, world!' to stdout"
+  def some_function do
+    IO.puts("Hello, world!")
+  end
+end
+```
+
+Then in `iex` the module can be compiled and the doc can be shown:
+```
+iex(1)> c("some_module.ex", ".")
+[SomeModule]
+iex(2)> h(SomeModule.some_function)
+...
+Prints 'Hello, world!' to stdout
+```
+
+`@spec` defines type for a function, [dailyxir](https://github.com/jeremyjh/dialyxir)
+can be used for type checking.
+```
+defmodule BirdCount do
+  @doc "returns today's bird count"
+  @spec today(list) :: integer() | nil
+  def today([]), do: nil
+  def today([today | _rest]), do: today
+end
+```
 
 ## lasagna
 
@@ -282,4 +310,7 @@ defmodule RationalNumbers do
   end
 end
 ```
-G
+
+## bird count
+
+Recursion + pattern matching + multiple function clauses = awesome
