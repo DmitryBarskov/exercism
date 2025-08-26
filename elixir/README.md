@@ -408,3 +408,37 @@ spawn(&loop/0)
 ```elixir
 spawn(TakeANumber, :loop, [0])
 ```
+
+## [High Score](./high-score/README.md)
+
+Map in Elixir:
+```elixir
+%{atom_key: 1, 1 => :atom_value, "other_type_of_key" => :atom_value}
+
+%{a: 1}[:a] #=> 1
+%{a: 1}[:b] #=> nil
+%{a: 1}.a #=> 1
+%{a: 1}.b # ** (KeyError) key :b not found in: %{a: 2}
+Map.fetch(%{a: 2}, :a) #=> {:ok, 2}
+Map.fetch(%{a: 2}, :b) #=> {:error}
+Map.get(%{a: 2}, :b, 3) #=> 3
+```
+
+[etc](https://hexdocs.pm/elixir/1.18.4/Map.html). Worth mentioning:
+`filter/2`, `get_and_update/3`, `has_key?/2`, `put/3`, `update/4`, `to_list/1`,
+`values/1`, `keys/1`.
+
+In Elixir, we can define module attributes which can be used as constants in our functions.
+Their value can be any expression which can be evaluated at compilation time.
+After compilation, module attributes are not accessible since they are expanded during compilation.
+
+```elixir
+defmodule Example do
+  # Defines the attribute as the value 1
+  @constant_number 1
+
+  def example_value() do
+    @constant_number
+  end
+end
+```
