@@ -426,7 +426,7 @@ Map.get(%{a: 2}, :b, 3) #=> 3
 
 [etc](https://hexdocs.pm/elixir/1.18.4/Map.html). Worth mentioning:
 `filter/2`, `get_and_update/3`, `has_key?/2`, `put/3`, `update/4`, `to_list/1`,
-`values/1`, `keys/1`.
+`values/1`, `keys/1`, `new/1`, `delete/2`.
 
 In Elixir, we can define module attributes which can be used as constants in our functions.
 Their value can be any expression which can be evaluated at compilation time.
@@ -441,4 +441,38 @@ defmodule Example do
     @constant_number
   end
 end
+```
+
+## [Boutique Inventory](./boutique-inventory/README.md)
+
+`Enum` module contains useful functions, such as `map/2`, `filter/2`, `join/2`,
+`map_join/3`, `all?/2`, `reduce/3`, `reduce_while/3`, `into/2`
+and [many more](https://hexdocs.pm/elixir/1.18.4/Enum.html).
+
+To `Enum.map` on maps, also use these functions: `Enum.into`, `Map.new`.
+
+These functions work for types implementing Enumerable protocol, including
+`List`, `Map`, `Range`.
+
+Pattern matching on a map:
+```
+%{b: b_value} = %{a: 2, b: 3, c: 4}
+b_value #=> 3
+```
+
+### Protocols
+
+```elixir
+defprotocol Reversible do
+  def reverse(term)
+end
+
+defimpl Reversible, for: List do
+  def reverse(term) do
+    Enum.reverse(term)
+  end
+end
+
+Reversible.reverse([1, 2, 3]) #=> [3, 2, 1]
+Reversible.reverse(%{}) #=> ** (Protocol.UndefinedError) protocol Reversible not implemented for type Map
 ```
