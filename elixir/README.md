@@ -117,6 +117,9 @@ Float.round(5.5675, 3) #=> 5.567
 ceil(10.1) #=> 11
 ```
 
+To drop floating point part use `Kernel.trunc/1`. `Kernel` functions can be
+called wihtout module name: `Kernel.trunc(3.4) #=> 3` and `trunc(3.4) #=> 3`.
+
 ## [Log Level](./log-level/README.md)
 
 Use cond for if-else-if kind of logic.
@@ -132,6 +135,8 @@ end
 Atoms are constants named as their values. They are like strings, but stored
 in lookup table in memory. For example `:ok, :error, :hello_world` are atoms.
 Values `true` and `false` are references to atoms `:true` and `:false`.
+
+Equality: `1 == 1.0 #=> true` and stricter version `1 === 1.0 #=> false`.
 
 ## [Language List](./language-list/README.md)
 
@@ -207,7 +212,7 @@ defmodule PowerOfTwo do
 end
 ```
 
-## guessing-game
+## [Guessing Game](./guessing-game/HINTS)
 
 Elixir functions can have multiple definitions (clauses).
 Pattern matching works in function parameters. The first matching function
@@ -238,12 +243,12 @@ def number_to_string(2, 2), do: "10"
 def number_to_string(3, 2), do: "11"
 ```
 
-## [kitchen-calculator](./kitchen-calculator/README.md)
+## [Kitchen Calculator](./kitchen-calculator/README.md)
 
 Tuples are like immutable arrays that can hold values with different data types.
 These are tuples `{}`, `{42}`, `{:ok, 5, "hello"}`.
 
-`elem/2` can be used to access tuples' items. `elem({:ok, 42}, 1) # => 42`.
+`Kernel.elem/2` can be used to access tuples' items. `elem({:ok, 42}, 1) # => 42`.
 
 Pattern matching works with tuples:
 ```elixir
@@ -267,16 +272,10 @@ defmodule ResponseHandling do
   end
 end
 
-# prints
-#=> Hello
-# to stdout
+# prints "Hello" to stdout
 ResponseHandling.handle_response({:ok, "Hello"})
 
-# prints
-#=> {:ok, "Hello"}
-# to stdout and
-#=> Hello
-# to stderr
+# prints "{:ok, "Hello"}" to stdout and "Hello" to stderr
 ResponseHandling.handle_response({:error, 404})
 
 # FunctionClauseError will occur
@@ -377,4 +376,35 @@ end
 
 KwList.matching(year: 1988, country: "France", model: "A320") # can omit [ and ]
 #=> ["Year is 1988", "Country is France"]
+```
+
+## [Take-A-Number](./take-a-number/README.md)
+
+To create an Elixir process use `spawn/1` (don't confuse with OS processes).
+`spawn` takes a function to execute and returns a PID.
+`spawn(fn -> 2 + 2 end) # => #PID<0.125.0>`
+Send a message to a process using `send/2` which takes a PID and a value to send.
+
+```elixir
+send(self, :test)
+receive do
+  :test -> IO.puts("Received :test!")
+  other -> IO.puts("Unexpected message #{other}")
+end
+#=> Received :test!
+```
+
+`receive/1` takes only one message from the mailbox. If there are no messages
+in the mailbox, it will block current's process execution until message is sent.
+
+`&function/arity` syntax can be used to pass it to `spawn`:
+
+```elixir
+spawn(&loop/0)
+```
+
+`spawn` can take 3 arguments:
+
+```elixir
+spawn(TakeANumber, :loop, [0])
 ```
