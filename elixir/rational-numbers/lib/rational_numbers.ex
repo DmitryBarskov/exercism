@@ -52,7 +52,8 @@ defmodule RationalNumbers do
 
   @doc """
   Exponentiation of a real number by a rational number
-  Exponentiation of a real number `x` to a rational number `r = a/b` is `x^(a/b) = root(x^a, b)`, where `root(p, q)` is the `q`th root of `p`.
+  Exponentiation of a real number `x` to a rational number `r = a/b` is
+  `x^(a/b) = root(x^a, b)`, where `root(p, q)` is the `q`th root of `p`.
   """
   @spec pow_real(x :: integer, n :: rational) :: float
   def pow_real(x, {numerator, denominator}) do

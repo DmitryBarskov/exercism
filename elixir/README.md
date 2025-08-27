@@ -476,3 +476,45 @@ end
 Reversible.reverse([1, 2, 3]) #=> [3, 2, 1]
 Reversible.reverse(%{}) #=> ** (Protocol.UndefinedError) protocol Reversible not implemented for type Map
 ```
+
+## [Log Parser](./log-parser/README.md)
+
+### Regular expressions
+
+```elixir
+"this string includes a test" =~ ~r/test/ # => true
+
+String.match?("Hello world! 42!", ~r/\d{3}/) # => false
+
+String.match?("123", ~r/^[[:alnum:]]+$/) #=> true
+
+Regex.run(~r/(\b\w{3}\b)/i, "Hello there, how are you?")
+#=> ["how", "how"]
+
+Regex.scan(~r/(\b\w{3}\b)/i, "Hello there, how are you?")
+#=> [["how", "how"], ["are", "are"], ["you", "you"]]
+
+```
+
+### Other sigils
+
+Sigils start with the tilde (`~`) character which is followed by either
+a single lower-case letter or
+one or more upper-case letters,
+and then a delimiter.
+Optional modifiers are added after the final delimiter.
+
+The available delimiters are: `//`, `||`, `""`, `''`, `()`, `[]`, `{}`, `<>`.
+
+```elixir
+~r/foo|bar/i # regex
+~s|this this a simple string but can contain a " without escaping| # string
+~c"charlist" # charlist
+~w'this is a word list' #=> ["this", "is", "a", "word", "list"]
+~w(this is a list of atoms)a #=> [:this, :is, :a, :list, :of, :atoms]
+~w(list of char lists)c #=> [~c"list", ~c"of", ~c"char", ~c"lists"]
+~D[2019-10-31] # date
+~T[23:00:07.0] # time
+~N[2019-10-31 23:00:07] # naive date time
+~U[2019-10-31 19:59:03Z] # UTC date time
+```
