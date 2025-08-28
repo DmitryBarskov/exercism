@@ -561,3 +561,92 @@ end
 %User{}
 # ** (ArgumentError) the following keys must also be given when building struct User: [:age]
 ```
+
+## [RPN Calculator](./rpn-calculator/README.md)
+
+In elixir methods with `!` raise errors.
+```elixir
+Map.fetch(%{a: 1}, :b) #=> :error
+Map.fetch!(%{a: 1}, :b) #=> ** (KeyError) key :b not found in: %{a: 1}
+```
+But preferred way is to handle returned values.
+
+Still errors can be thrown and caught like this:
+```elixir
+try do
+  raise RuntimeError, "something went wrong"
+rescue
+  e in RuntimeError -> {:error, e.message}
+end #=> {:error, "something went wrong"}
+```
+
+User exceptions can be declared using `defexception`:
+
+```elixir
+defmodule MyError do
+  defexception as_text: "default message"
+end
+
+try do
+  raise MyError, as_text: "Hello world!"
+rescue
+  RuntimeError -> :error
+  e in MyError -> {:my_error, e.as_text}
+end #=> {:my_error, "Hello world!"}
+```
+
+> ### Fail fast / Let it crash
+> One saying that is common in the Erlang community, as well as Elixir's,
+> is "fail fast" / "let it crash". The idea behind let it crash is that,
+> in case something unexpected happens, it is best to let the exception happen,
+> without rescuing it.
+> It is important to emphasize the word _unexpected_. For example, imagine
+> you are building a script to process files. Your script receives filenames
+> as inputs. It is expected that users may make mistakes and provide unknown
+> filenames. In this scenario, while you could use `File.read!/1` to read files
+> and let it crash in case of invalid filenames, it probably makes more sense
+> to use `File.read/1` and provide users of your script with a clear and
+> precise feedback of what went wrong.
+> At the end of the day, "fail fast" / "let it crash" is a way of saying that,
+> when something unexpected happens, it is best to start from scratch within
+> a new process, freshly started by a supervisor, rather than blindly trying to
+> rescue all possible error cases without the full context of when and
+> how they can happen.
+
+### Reraise
+
+Sometimes errors are needed, e.g. for logging and observability:
+
+```elixir
+require Logger
+
+try do
+  raise "Oops"
+rescue
+  e ->
+    Logger.error(Exception.format(:error, e, __STACKTRACE__))
+    reraise e, __STACKTRACE__
+end
+```
+
+### Throw
+
+`throw` can be used to control the flow like with exceptions, but with
+regular values. !VERY DISCOURAGED!
+
+```elixir
+try do
+  Enum.each(-50..50, fn x ->
+    if rem(x, 13) == 0, do: throw(x)
+  end)
+  "Got nothing"
+catch
+  x -> "Got #{x}"
+end #=> "Got -39"
+
+# Equivalent code, but without throw:
+case Enum.find(-50..50, fn x -> rem(x, 13) == 0 end) do
+  nil -> "Got nothing"
+  x -> "Got #{x}"
+end #=> "Got -39"
+```
