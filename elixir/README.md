@@ -518,3 +518,46 @@ The available delimiters are: `//`, `||`, `""`, `''`, `()`, `[]`, `{}`, `<>`.
 ~N[2019-10-31 23:00:07] # naive date time
 ~U[2019-10-31 19:59:03Z] # UTC date time
 ```
+
+## [Remote Control Car](./remote-control-car/README.md)
+
+Struct in elixir are built based on maps.
+
+```elixir
+defmodule Plane do
+  defstruct [:engine_model, engine_count: 2]
+end
+
+%Plane{} #=> %Plane{engine_model: nil, engine_count: 2}
+
+plane = %Plane{engine_model: "IAE V2500"}
+plane #=> %Plane{engine_model: "IAE V2500", engine_count: 2}
+plane.engine_model #=> "IAE V2500"
+
+Map.keys(plane) #=> [:__struct__, :engine_model, :engine_count]
+Map.values(plane) #=> [Plane, "IAE V2500", 2]
+
+Map.put(plane, :engine_model, "PW6000")
+#=> %Plane{engine_model: "PW6000", engine_count: 2}
+
+Map.put(plane, :seats, 150)
+#=> %{__struct__: Plane, engine_model: "IAE V2500", engine_count: 2, seats: 150}
+
+%{plane | engine_count: 4}
+#=> %Plane{engine_model: "IAE V2500", engine_count: 4}
+
+%Plane{engine_model: engine_model} = plane
+engine_model #=> "IAE V2500"
+```
+
+To make an attribute required, use `@enforce_keys`:
+
+```elixir
+defmodule User do
+  @enforce_keys [:age]
+  defstruct [:age]
+end
+
+%User{}
+# ** (ArgumentError) the following keys must also be given when building struct User: [:age]
+```
