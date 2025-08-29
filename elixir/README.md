@@ -650,3 +650,84 @@ case Enum.find(-50..50, fn x -> rem(x, 13) == 0 end) do
   x -> "Got #{x}"
 end #=> "Got -39"
 ```
+
+## [RPN Calculator Inspection](./rpn-calculator-inspection/README.md)
+
+Processes isolated by default, but can be linked using `spawn_link/1` or
+`Process.link/1`. Linked processes crash together.
+
+Parent process spawns another process, it crashes. Then "You OK?" is sent to
+parent to check if it is alive.
+```elixir
+parent = spawn(fn ->
+  child = spawn(fn -> raise "Child: oops!" end)
+  receive do
+    {_, sender} -> send(sender, "Parent: I'm still OK")
+  end
+end)
+
+send(parent, {"You OK?", self})
+receive do
+  msg -> "Received '#{msg}'"
+end #=> "Received 'Parent: I'm still OK'"
+```
+
+Same example, but child process is being spawned using `spawn_link/1`,
+parent does not respond to "You OK?".
+```elixir
+parent = spawn(fn ->
+  child = spawn_link(fn -> raise "Child: oops!" end)
+  # or spawn using `spawn/1` and then call Process.link(child)
+  Process.link(child)
+  receive do
+    {_, sender} -> send(sender, "Parent: I'm still OK")
+  end
+end)
+
+send(parent, {"You OK?", self})
+receive do
+  msg -> "Received '#{msg}'"
+end # *no response, press ^C*
+```
+
+Parent process can receive information about exiting of children:
+```elixir
+parent = spawn(fn ->
+  Process.flag(:trap_exit, true)
+  child = spawn_link(fn -> raise "Child: oops!" end)
+  # will receive 2 messages, one from child exiting
+  # the other one from send(parent, {"You OK?", self}) line
+  Enum.each(1..2, fn _ ->
+    receive do
+      {:EXIT, ^child, reason} ->
+        IO.puts("Parent: My child exited due")
+        IO.inspect(reason)
+      {_, sender} -> send(sender, "Parent: I'm still OK")
+    end
+  end)
+end)
+#=> Parent: My child exited due {%RuntimeError{message: "Child: oops!"}, []}
+
+send(parent, {"You OK?", self})
+receive do
+  msg -> "Received '#{msg}'"
+end #=> "Received 'Parent: I'm still OK'"
+```
+
+### Tasks
+
+`Task.async/1` creates an asynchronous task, returning `%Task{}` struct.
+To wait it to complate use `Task.await/2` function with timeout.
+
+```elixir
+t = Task.async(fn -> "Result from async task!" end)
+#=> %Task{
+#=>   mfa: {:erlang, :apply, 2},
+#=>   owner: #PID<0.105.0>,
+#=>   pid: #PID<0.110.0>,
+#=>   ref: #Reference<0.0.13443.1909499269.3852795906.116663>
+#=> }
+Task.await(t) #=> "Result from async task!"
+```
+
+To start a task for side effect only use `Task.start/1` or `Task.start_link/1`.

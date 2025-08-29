@@ -46,6 +46,7 @@ defmodule RationalNumbers do
   """
   @spec pow_rational(a :: rational, n :: integer) :: rational
   def pow_rational({num, den}, n) when n < 0, do: pow_rational({den, num} |> reduce_sign, -n)
+
   def pow_rational({num, den}, n) do
     {Integer.pow(num, n), Integer.pow(den, n)}
   end

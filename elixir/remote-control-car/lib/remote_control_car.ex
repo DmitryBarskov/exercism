@@ -13,11 +13,13 @@ defmodule RemoteControlCar do
   def display_battery(%RemoteControlCar{battery_percentage: 0}) do
     "Battery empty"
   end
+
   def display_battery(%RemoteControlCar{battery_percentage: bat}) do
     "Battery at #{bat}%"
   end
 
   def drive(%RemoteControlCar{battery_percentage: 0} = car), do: car
+
   def drive(%RemoteControlCar{} = car) do
     car
     |> Map.update!(:battery_percentage, &(&1 - 1))
