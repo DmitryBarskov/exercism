@@ -4,12 +4,15 @@ defmodule RPNCalculatorInspection do
   end
 
   def await_reliability_check_result(%{pid: pid, input: input}, results) do
-    receive do
-      {:EXIT, ^pid, :normal} -> Map.put(results, input, :ok)
-      {:EXIT, ^pid, _} -> Map.put(results, input, :error)
-    after
-      100 -> Map.put(results, input, :timeout)
-    end
+    result =
+      receive do
+        {:EXIT, ^pid, :normal} -> :ok
+        {:EXIT, ^pid, _} -> :error
+      after
+        100 -> :timeout
+      end
+
+    Map.put(results, input, result)
   end
 
   def reliability_check(calculator, inputs) do
@@ -17,11 +20,9 @@ defmodule RPNCalculatorInspection do
 
     results =
       inputs
-      |> Enum.map(fn input ->
-        start_reliability_check(calculator, input)
-      end)
-      |> Enum.map(fn check_data ->
-        await_reliability_check_result(check_data, %{})
+      |> Enum.map(fn input -> start_reliability_check(calculator, input) end)
+      |> Enum.map(fn input_and_pid ->
+        await_reliability_check_result(input_and_pid, %{})
       end)
       |> Enum.reduce(%{}, &Map.merge/2)
 
