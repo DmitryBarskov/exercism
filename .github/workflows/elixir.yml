@@ -1,0 +1,41 @@
+name: Elixir CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    name: Build and test
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: '1.15.2' # [Required] Define the Elixir version
+        otp-version: '26.0'      # [Required] Define the Erlang/OTP version
+    - name: Restore dependencies cache
+      uses: actions/cache@v3
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    - name: Run tests
+      run: |
+        for edir in elixir/*/; do
+          echo "##############################"
+          echo "# Testing '$edir' ... #"
+          cd $edir
+          mix deps.get
+          mix test --include pending
+          cd -
+          echo "##############################"
+        done
