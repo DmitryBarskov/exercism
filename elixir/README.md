@@ -731,3 +731,33 @@ Task.await(t) #=> "Result from async task!"
 ```
 
 To start a task for side effect only use `Task.start/1` or `Task.start_link/1`.
+
+## [Parallel Letter Frequency](./parallel-letter-Frequency/README.md)
+
+## [Bob](./bob/README.md)
+
+## [Leap](./leap/README.md)
+
+## [German Sysadmin](./german-sysadmin/README.md)
+
+Charlists are list of integers.
+
+```elixir
+iex(1)> [65, 66, 67]
+~c"ABC"
+iex(2)> [3, 66, 67]
+[3, 66, 67]
+iex(3)> ~c"ABC" |> hd
+65
+```
+
+`case` is like cond, but works with given value:
+```elixir
+age = 18
+
+case age do
+  0 -> :hello_world
+  age when age < 18 -> :coke
+  _ -> :any_drink
+end #=> :any_drink
+```
