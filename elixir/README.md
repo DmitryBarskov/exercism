@@ -761,3 +761,64 @@ case age do
   _ -> :any_drink
 end #=> :any_drink
 ```
+
+## [Paint by number](./paint-by-number/README.md)
+
+Binary data in Elixir represented by Bitstring. Bitstrings defined
+using the bitstring special form `<<>>`. Each segment has a value
+and type, separated by the `::` operator. The type specifies how
+many bits will be used to encode the value. The type can be omitted
+completely, which will default to a 8-bit integer value.
+
+```elixir
+# This defines a bitstring with three segments of a single bit each
+<<0::1, 1::1, 0::1>>
+```
+
+Specifying the type as `::1` is a shorthand for writing `::size(1)`.
+You need to use the longer syntax if the bit size comes
+from a variable.
+
+If the value of the segment overflows the capacity of the segment's
+type, it will be truncated from the left.
+
+```elixir
+<<0b1011::3>> == <<0b0011::3>>
+# => true
+```
+
+### Bitstring prepending and appending
+
+You can both prepend and append to an existing bitstring using
+`::bitstring`, this type must be used on the existing bitstring
+if it's of unknown size.
+
+```elixir
+value = <<0b110::3, 0b001::3>>
+new_value = <<0b011::3, value::bitstring, 0b000::3>>
+#=> <<120, 8::size(4)>>
+```
+
+### Bitstring pattern matching
+
+```elixir
+iex(6)> <<a::1, b::2>> = <<0b110::3>>
+<<6::size(3)>>
+iex(7)> a
+1
+iex(8)> b
+2
+```
+
+If a bitstring represents a printable UTF-8 encoded string,
+it gets displayed as a string.
+
+```elixir
+<<>>
+# => ""
+
+<<65, 66, 67>>
+# => "ABC"
+```
+
+## [Resistor Color Trio](./resistor-color-trio/README.md)
