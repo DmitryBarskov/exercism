@@ -839,3 +839,24 @@ def count(list), do: do_count(list, 0)
 defp do_count([], count), do: count
 defp do_count([_head | tail], count), do: do_count(tail, count + 1)
 ```
+
+## [All Your Base](./all-your-base/README.md)
+
+Learned `with` and `Enum.reduce_while/3`:
+
+```elixir
+with {:ok, result1} <- func1(),
+  {:ok, result2} <- func2(result1),
+  {:ok, result3} <- func3(result2),
+  do: result3
+
+# If at some point a pattern won't be matched, the unmatched value is returned.
+# Otherwise result3 is returned.
+```
+
+```elixir
+Enum.reduce_while(1..10, 0, fn
+  _, sum when sum > 20 -> {:halt, :infinity} # :halt will break execution early
+  num, sum -> {:cont, sum + num} # if :halt not returned it will behave just like regular reduce/3
+end)
+```
