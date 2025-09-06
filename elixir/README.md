@@ -822,3 +822,20 @@ it gets displayed as a string.
 ```
 
 ## [Resistor Color Trio](./resistor-color-trio/README.md)
+
+## [DNA Encoding](./dna-encoding/README.md)
+
+Use tail call for recursive functions, i.e. recursive function call
+should be the last __code executed in your function__.
+
+```elixir
+# Count the length of a list without an accumulator
+def count([]), do: 0
+def count([_head | tail]), do: 1 + count(tail)
+
+# Count the length of a list with an accumulator
+def count(list), do: do_count(list, 0)
+
+defp do_count([], count), do: count
+defp do_count([_head | tail], count), do: do_count(tail, count + 1)
+```
