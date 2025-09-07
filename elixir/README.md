@@ -873,3 +873,16 @@ Enum.to_list(3..1//-1)
 Enum.to_list(1..5//2)
 [1, 3, 5]
 ```
+
+## [Captain's log](./captains-log/README.md)
+
+Use `Enum.random` to pick an element from list, range etc.
+
+An Erlang func should be called from its module. Erlang modules are snake cased.
+
+```elixir
+:math.pi() #=> 3.141592653589793
+:timer.sleep(1) #=> :ok
+:rand.uniform() #=> 0.001160346888228636
+:io_lib.fwrite("hello ~s", ["world"]) # prints "hello world"
+```
