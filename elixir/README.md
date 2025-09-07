@@ -860,3 +860,16 @@ Enum.reduce_while(1..10, 0, fn
   num, sum -> {:cont, sum + num} # if :halt not returned it will behave just like regular reduce/3
 end)
 ```
+
+## [Chessboard](./chessboard/README.md)
+
+Ranges are created via the `first..last` and `first..last//step`.
+
+```elixir
+Enum.to_list(1..3)
+[1, 2, 3]
+Enum.to_list(3..1//-1)
+[3, 2, 1]
+Enum.to_list(1..5//2)
+[1, 3, 5]
+```
