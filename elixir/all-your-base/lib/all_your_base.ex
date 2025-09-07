@@ -9,8 +9,8 @@ defmodule AllYourBase do
 
   @spec convert(list, integer, integer) :: {:ok, list} | {:error, String.t()}
   def convert(digits, input_base, output_base) do
-    with number when is_integer(number) <- digits_to_integer(digits, input_base),
-         output when is_list(output) <- integer_to_digits(number, output_base),
+    with {:ok, number} <- digits_to_integer(digits, input_base),
+         {:ok, output} <- integer_to_digits(number, output_base),
          do: {:ok, output}
   end
 
@@ -25,23 +25,23 @@ defmodule AllYourBase do
     {:error, "all digits must be >= 0 and < input base"}
   end
 
-  defp digits_to_integer([], _, acc), do: acc
+  defp digits_to_integer([], _, acc), do: {:ok, acc}
 
   defp digits_to_integer([d | rest], base, acc) do
     digits_to_integer(rest, base, acc * base + d)
   end
 
   # returns digits of an integer in the given base
-  defp integer_to_digits(num, base, acc \\ [])
+  defp integer_to_digits(num, base, digits \\ [])
 
   defp integer_to_digits(_, base, _) when base < 2 do
     {:error, "output base must be >= 2"}
   end
 
-  defp integer_to_digits(0, _, []), do: [0]
-  defp integer_to_digits(0, _, acc), do: acc
+  defp integer_to_digits(0, _, []), do: {:ok, [0]}
+  defp integer_to_digits(0, _, digits), do: {:ok, digits}
 
-  defp integer_to_digits(num, base, acc) do
-    integer_to_digits(div(num, base), base, [rem(num, base) | acc])
+  defp integer_to_digits(num, base, digits) do
+    integer_to_digits(div(num, base), base, [rem(num, base) | digits])
   end
 end
