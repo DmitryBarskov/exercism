@@ -861,6 +861,39 @@ Enum.reduce_while(1..10, 0, fn
 end)
 ```
 
+Also learned about `Stream.unfold/2` after a review:
+
+```elixir
+Stream.unfold({10928, []}, fn
+  nil -> nil
+  {0, _} = current_value -> {current_value, nil}
+  {rest, ds} = current_value -> {current_value, {div(rest, 10), [rem(rest, 10) | ds] }}
+end)
+#=> [
+#  {10928, []},
+#  {1092, [8]},
+#  {109, [2, 8]},
+#  {10, [9, 2, 8]},
+#  {1, [0, 9, 2, 8]},
+#  {0, [1, 0, 9, 2, 8]}
+#]
+```
+
+It was not super convenient, since unfold returns the last `current_value`, not the next!
+```elixir
+Stream.unfold({10928, []}, fn
+  {0, _} -> nil
+  {rest, ds} = current_value -> {current_value, {div(rest, 10), [rem(rest, 10) | ds] }}
+end)
+#=> [
+#  {10928, []},
+#  {1092, [8]},
+#  {109, [2, 8]},
+#  {10, [9, 2, 8]},
+#  {1, [0, 9, 2, 8]}
+#]
+```
+
 ## [Chessboard](./chessboard/README.md)
 
 Ranges are created via the `first..last` and `first..last//step`.

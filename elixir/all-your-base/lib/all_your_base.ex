@@ -9,38 +9,39 @@ defmodule AllYourBase do
 
   @spec convert(list, integer, integer) :: {:ok, list} | {:error, String.t()}
   def convert(digits, input_base, output_base) do
-    with number when is_integer(number) <- undigits(digits, input_base),
-         output when is_list(output) <- digits(number, output_base),
+    with number when is_integer(number) <- digits_to_integer(digits, input_base),
+         output when is_list(output) <- integer_to_digits(number, output_base),
          do: {:ok, output}
   end
 
-  defp undigits(_, base) when base < 2, do: {:error, "input base must be >= 2"}
+  # builds an integer from given digits and base
+  defp digits_to_integer(_, base, acc \\ 0)
 
-  defp undigits(digits, base) do
-    Enum.reduce_while(
-      digits,
-      0,
-      fn
-        digit, _ when digit >= base or digit < 0 ->
-          {:halt, {:error, "all digits must be >= 0 and < input base"}}
-
-        digit, acc ->
-          {:cont, acc * base + digit}
-      end
-    )
+  defp digits_to_integer(_, base, _) when base < 2 do
+    {:error, "input base must be >= 2"}
   end
 
-  defp digits(_, base) when base < 2, do: {:error, "output base must be >= 2"}
-  defp digits(0, _), do: [0]
+  defp digits_to_integer([d | _], base, _) when d < 0 or d >= base do
+    {:error, "all digits must be >= 0 and < input base"}
+  end
 
-  defp digits(number, base) do
-    Enum.reduce_while(
-      Stream.iterate(0, &(&1 + 1)),
-      {number, []},
-      fn
-        _, {0, digits} -> {:halt, digits}
-        _, {num, digits} -> {:cont, {div(num, base), [rem(num, base) | digits]}}
-      end
-    )
+  defp digits_to_integer([], _, acc), do: acc
+
+  defp digits_to_integer([d | rest], base, acc) do
+    digits_to_integer(rest, base, acc * base + d)
+  end
+
+  # returns digits of an integer in the given base
+  defp integer_to_digits(num, base, acc \\ [])
+
+  defp integer_to_digits(_, base, _) when base < 2 do
+    {:error, "output base must be >= 2"}
+  end
+
+  defp integer_to_digits(0, _, []), do: [0]
+  defp integer_to_digits(0, _, acc), do: acc
+
+  defp integer_to_digits(num, base, acc) do
+    integer_to_digits(div(num, base), base, [rem(num, base) | acc])
   end
 end
