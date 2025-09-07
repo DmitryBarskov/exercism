@@ -919,3 +919,19 @@ An Erlang func should be called from its module. Erlang modules are snake cased.
 :rand.uniform() #=> 0.001160346888228636
 :io_lib.fwrite("hello ~s", ["world"]) # prints "hello world"
 ```
+
+## [RPG Character Sheet](./rpg-character-sheet/README.md)
+
+`IO` - module for handling input and output.
+
+```elixir
+IO.puts("Hi!") #=> :ok
+# pirnts 'Hi!' to stdout
+```
+
+`IO.inspect` prints any value and returns it.
+
+```elixir
+IO.gets("What's your name?\n") #=> "Bob\n"
+# prints 'What's your name?'
+```
