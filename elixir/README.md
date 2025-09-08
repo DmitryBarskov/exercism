@@ -43,17 +43,17 @@ end
 ```
 
 Then in `iex` the module can be compiled and the doc can be shown:
-```
+```elixir
 iex(1)> c("some_module.ex", ".")
 [SomeModule]
 iex(2)> h(SomeModule.some_function)
-...
-Prints 'Hello, world!' to stdout
+# ...
+# Prints 'Hello, world!' to stdout
 ```
 
 `@spec` defines type for a function, [dailyxir](https://github.com/jeremyjh/dialyxir)
 can be used for type checking.
-```
+```elixir
 defmodule BirdCount do
   @doc "returns today's bird count"
   @spec today(list) :: integer() | nil
@@ -937,3 +937,83 @@ IO.gets("What's your name?\n") #=> "Bob\n"
 ```
 
 ## [Strain](./strain/README.md)
+
+## [City Office](./city-office/README.md)
+
+Use `@moduledoc` to add docs for module and `@doc` for functions.
+
+```elixir
+defmodule MyModule do
+  @moduledoc """
+  Elixir docs are written in markdown
+  """
+
+  @doc """
+  Does nothing
+
+  ## Examples
+
+      iex> MyModule.func
+      nil
+  """
+  @spec func() :: nil
+  def func(), do: nil
+end
+```
+
+Compile a module and you can see its docs:
+
+```elixir
+c("my_module.ex", ".") #=> [MyModule]
+h(MyModule)
+#
+#               MyModule
+#
+# Elixir docs are written in markdown
+#
+
+h(MyModule.func)
+#
+#               def func()
+#
+#  @spec func() :: nil
+#
+# Does nothing
+#
+# ## Examples
+#
+#    iex> MyModule.func
+#    nil
+#
+```
+
+### Types
+
+Most commonly used types include:
+
+- booleans: `boolean()`
+- strings: `String.t()`
+- numbers: `integer()`, `non_neg_integer()`, `pos_integer()`, `float()`
+- lists: `list()`, `nonempty_list()`, maps: `map()`
+- a value of any type: `any()`
+- union `|`. For example, `integer() | :error`
+- tuple of any size `tuple()`
+- tuples with fixed size `{:ok, integer()}`
+
+Some types can also be parameterized, for example `list(integer)` is a list of integers.
+
+Literal values can also be used as types.
+
+#### Naming function parameters
+```elixir
+@spec to_hex(hue :: integer, saturation :: integer, lightness :: integer) :: String.t()
+def to_hex(hue, saturation, lightness)
+```
+
+#### User defined types
+```elixir
+@type color :: {hue :: integer, saturation :: integer, lightness :: integer}
+
+@spec to_hex(color()) :: String.t()
+def to_hex({hue, saturation, lightness})
+```
