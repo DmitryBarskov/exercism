@@ -935,3 +935,5 @@ IO.puts("Hi!") #=> :ok
 IO.gets("What's your name?\n") #=> "Bob\n"
 # prints 'What's your name?'
 ```
+
+## [Strain](./strain/README.md)
