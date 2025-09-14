@@ -1017,3 +1017,45 @@ def to_hex(hue, saturation, lightness)
 @spec to_hex(color()) :: String.t()
 def to_hex({hue, saturation, lightness})
 ```
+
+## [Community Garden](./community-garden/README.md)
+
+`Agent` module abstracts spawning processes with send-receive loop. Agents
+encapsulate some mutable state.
+
+```elixir
+defmodule SendReceive do
+  def loop(state) do
+    receive do
+      {:inc, sender} ->
+        send(sender, :ok)
+        loop(state + 1)
+
+      {:get, sender} ->
+        send(sender, state)
+        loop(state)
+    end
+  end
+end
+
+pid = spawn(SendReceive, :loop, [42])
+
+send(pid, {:inc, self})
+receive do
+  msg -> msg
+end #=> :ok
+
+send(pid, {:get, self})
+receive do
+  msg -> msg
+end #=> 43
+```
+
+Or the equivalent code with `Agent`
+
+```elixir
+{:ok, pid} = Agent.start(fn -> 42 end)
+
+Agent.cast(pid, &(&1 + 1)) #=> :ok
+Agent.get(pid, &(&1)) #=> 43
+```
