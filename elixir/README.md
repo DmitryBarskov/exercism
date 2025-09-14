@@ -1059,3 +1059,21 @@ Or the equivalent code with `Agent`
 Agent.cast(pid, &(&1 + 1)) #=> :ok
 Agent.get(pid, &(&1)) #=> 43
 ```
+
+## [Need for speed](./need-for-speed/README.md)
+
+```elixir
+defmodule A.B.C do
+  def test, do: 42
+end
+
+defmodule MyModule do
+  alias A.B.C # makes C.test available in this module
+  alias Integer, as: I # makes functions from Integer module available with I
+  # e.g. I.digits, I.pow, I.gcd, etc
+  import Float # makes ALL functions from Float available without prefix
+  import Date, except: [new: 4] # import ALL functions from Date except new/4
+  import String, only: [graphemes: 1] # makes graphemes/1 from String available
+  # without prefix
+end
+```
