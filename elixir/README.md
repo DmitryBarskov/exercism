@@ -64,7 +64,7 @@ end
 
 ## [Lasagna](./lasagna/README.md)
 
-Functions in Elixir must be in modules, `defmoudle` creates a moudle,
+Functions in Elixir must be in modules, `defmodule` creates a moudle,
 `def` creates a function, `defp` creates a private function:
 
 ```elixir
@@ -1076,4 +1076,78 @@ defmodule MyModule do
   import String, only: [graphemes: 1] # makes graphemes/1 from String available
   # without prefix
 end
+```
+
+## [Variable Length Quantity](./variable-length-quantity/README.md)
+
+## [Top Secret](./top-secret/README.md)
+
+AST also called a quoted expression in Elixir represents a piece of code, it
+is used for metaprogramming. `Code` and `Macro` modules are used to manipulate
+AST.
+
+```elixir
+quote do
+  2 + 3
+end
+#=> {
+#  :+,
+#  [context: Elixir, imports: [{1, Kernel}, {2, Kernel}]],
+#  [2, 3]
+# }
+```
+So tuple returned by `quote` special form consist of an atom, the operation,
+a keyword list, the metadata, and a list of arguments, which contains other nodes.
+
+## [Basketball Website](./basketball-website/README.md)
+
+### Behaviours
+
+Behaviours can be referenced by modules to ensure they implement required specific function signatures defined by @callback.
+
+
+```elixir
+defmodule Person do
+  @behaviour Access
+end
+# warning: function fetch/2 required by behaviour Access is not implemented (in module Person)
+# warning: function get_and_update/3 required by behaviour Access is not implemented (in module Person)
+# warning: function pop/2 required by behaviour Access is not implemented (in module Person)
+
+defmodule Person do
+  @behaviour Access
+
+  defstruct [:name, :age]
+
+  def fetch(%Person{name: name}, :name), do: {:ok, name}
+  def fetch(%Person{age: age}, :age), do: {:ok, age}
+  def fetch(_, _), do: :error
+
+  def get_and_update(%Person{name: old_name, age: age}, :name, fun) do
+    case fun.(old_name) do
+      :pop -> {old_name, %Person{age: age}}
+      {old_name, new_name} -> {old_name, %Person{name: new_name, age: age}}
+    end
+  end
+  def get_and_update(%Person{name: name, age: old_age}, :age, fun) do
+    case fun.(old_age) do
+      :pop -> {old_age, %Person{name: name}}
+      {old_age, new_age} -> {old_age, %Person{name: name, age: new_age}}
+    end
+  end
+  def get_and_update(%Person{} = person, _key, _fun) do
+    {nil, person}
+  end
+
+  def pop(%Person{age: age}, :name), do: %Person{age: age}
+  def pop(%Person{name: name}, :age), do: %Person{name: name}
+  def pop(%Person{} = person, _key), do: person
+end
+
+p = %Person{name: "John", age: 30}
+p[:age] #=> 30
+Access.pop(p, :name) #=>  %Person{name: nil, age: 30}
+Access.get_and_update(p, :age, fn current_value ->
+  {current_value, current_value + 1}
+end) #=> {30, %Person{name: "John", age: 31}}
 ```
