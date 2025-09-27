@@ -1105,7 +1105,6 @@ a keyword list, the metadata, and a list of arguments, which contains other node
 
 Behaviours can be referenced by modules to ensure they implement required specific function signatures defined by @callback.
 
-
 ```elixir
 defmodule Person do
   @behaviour Access
@@ -1119,10 +1118,12 @@ defmodule Person do
 
   defstruct [:name, :age]
 
+  @impl Access
   def fetch(%Person{name: name}, :name), do: {:ok, name}
   def fetch(%Person{age: age}, :age), do: {:ok, age}
   def fetch(_, _), do: :error
 
+  @impl Access
   def get_and_update(%Person{name: old_name, age: age}, :name, fun) do
     case fun.(old_name) do
       :pop -> {old_name, %Person{age: age}}
@@ -1139,6 +1140,7 @@ defmodule Person do
     {nil, person}
   end
 
+  @impl Access
   def pop(%Person{age: age}, :name), do: %Person{age: age}
   def pop(%Person{name: name}, :age), do: %Person{name: name}
   def pop(%Person{} = person, _key), do: person
@@ -1150,4 +1152,64 @@ Access.pop(p, :name) #=>  %Person{name: nil, age: 30}
 Access.get_and_update(p, :age, fn current_value ->
   {current_value, current_value + 1}
 end) #=> {30, %Person{name: "John", age: 31}}
+```
+
+## [Dancing Dots](./dancing-dots/README.md)
+
+### `__using__` macro
+
+`use` macro allows us to quickly extend our module with functionality provided
+by another module by injecting code into our module, defining functions,
+importing or aliasing other modules, or setting module attributes.
+
+This injections defined in the module's `__using__/1` macro.
+```elixir
+defmodule ConstMethods do
+  defmacro __using__(opts) do
+    Enum.map(opts, fn {key, value} ->
+      quote do
+        def unquote(key)() do
+          unquote value
+        end
+      end
+    end)
+  end
+end
+
+defmodule TestMe do
+  use ConstMethods, [pi: 3.14, g: 9.81, e: 2.71]
+end
+
+TestMe.pi #=> 3.14
+TestMe.g #=> 9.81
+TestMe.e #=> 2.71
+```
+
+### Behaviours
+
+See [Basketball Website](#Basketball-Website)
+
+Provide default callbacks implementation with `__using__/1`.
+
+Note that defining functions inside of `__using__/1` is discouraged
+for any other purpose than defining default callback implementations,
+but you can always define functions in another module and import them
+in the `__using__/1` macro.
+
+To make it possible for users of the behaviour module to override
+the default implementation, call the defoverridable/1 macro
+after the function implementation
+
+```elixir
+defmodule Countable do
+  @callback count(collection :: any) :: pos_integer
+
+  defmacro __using__(_) do
+    quote do
+      @behaviour Countable
+      def count(collection), do: Enum.count(collection)
+      defoverridable count: 1
+    end
+  end
+end
 ```
