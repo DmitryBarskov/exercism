@@ -24,6 +24,14 @@ services:
         TARGET_IMAGE: "elixir:alpine"
     working_dir: /home/exercist/exercism/elixir
 
+  go:
+    <<: *default
+    build:
+      args:
+        <<: *default-args
+        TARGET_IMAGE: golang:alpine
+    working_dir: /home/exercist/exercism/go
+
   java:
     <<: *default
     build:
