@@ -1213,3 +1213,68 @@ defmodule Countable do
   end
 end
 ```
+
+## [Take-A-Number Deluxe](./take-a-number-deluxe/README.md)
+
+`GenServer` (generic server) is a behaviour that abstracts common
+client-server interactions between Elixir processes.
+`GenServer` behaviour provides abstractions for implementing send-receive loops.
+
+The `GenServer` behaviour defines one required callback, `init/1`,
+and a few interesting optional callbacks: `handle_call/3`, `handle_cast/2`,
+and `handle_info/3`. The clients using a `GenServer` aren't supposed to call
+those callbacks directly. Instead, the `GenServer` module provides functions
+that clients can use to communicate with a GenServer process.
+
+Often, a single module defines both a client API, a set of functions
+that other parts of your Elixir app can call to communicate
+with this `GenServer` process, and server callback implementations,
+which contain this `GenServer`'s logic.
+
+Typical `GenServer` usage:
+
+```elixir
+defmodule MyStack do
+  use GenServer
+
+  # Client API
+
+  @spec start_link() :: GenServer.on_start()
+  def start_link() do
+    GenServer.start_link(__MODULE__, [])
+  end
+
+  @spec push(pid(), any()) :: nil
+  def push(stack, item) do
+    GenServer.cast(stack, {:push, item})
+  end
+
+  @spec pop(pid()) :: {:ok, any()} | {:error, String.t()}
+  def pop(stack) do
+    GenServer.call(stack, :pop)
+  end
+
+  # Callbacks
+
+  @impl true
+  def init(state), do: {:ok, state}
+
+  @impl true
+  def handle_cast({:push, item}, state) do
+    {:noreply, [item | state]}
+  end
+
+  @impl true
+  def handle_call(:pop, _, state) do
+    case state do
+      [] -> {:reply, {:error, "Cannot pop from empty stack"}, state}
+      [top | rest] -> {:reply, {:ok, top}, rest}
+    end
+  end
+end
+
+{:ok, my_stack} = MyStack.start_link()
+Stack.push(stack, 1) #=> :ok
+Stack.pop(stack) #=> {:ok, 1}
+Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
+```
