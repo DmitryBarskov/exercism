@@ -1284,3 +1284,7 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ## [Allergies](./allergies/README.md)
 
 ## [Eliud's Eggs](./eliuds-eggs/README.md)
+
+## [Intergalactic Transmission](./intergalactic-transmission/README.md)
+
+`binary` type only allows whole bytes, while `bitstring` allows separate bits.
