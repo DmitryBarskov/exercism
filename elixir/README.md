@@ -1280,3 +1280,5 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ```
 
 ## [Secret Handshake](./secret-handshake/README.md)
+
+## [Allergies](./allergies/README.md)
