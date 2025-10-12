@@ -1278,3 +1278,5 @@ Stack.push(stack, 1) #=> :ok
 Stack.pop(stack) #=> {:ok, 1}
 Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ```
+
+## [Secret Handshake](./secret-handshake/README.md)
