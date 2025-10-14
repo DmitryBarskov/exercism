@@ -1290,3 +1290,5 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 `binary` type only allows whole bytes, while `bitstring` allows separate bits.
 
 ## [Armstrong Numbers](./armstrong-numbers/README.md)
+
+## [Square Root](./square-root/README.md)
