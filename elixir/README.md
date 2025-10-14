@@ -1288,3 +1288,5 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ## [Intergalactic Transmission](./intergalactic-transmission/README.md)
 
 `binary` type only allows whole bytes, while `bitstring` allows separate bits.
+
+## [Armstrong Numbers](./armstrong-numbers/README.md)
