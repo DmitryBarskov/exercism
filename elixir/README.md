@@ -1323,3 +1323,5 @@ Date and time in Elixir literals:
 `Date`, `Time`, `NaiveDateTime` and `DateTime` modules contain functions for
 corresponding values. Use `compare`, `diff`, `before?` and `after?` to compare
 date and times, `>`, `<` and `==` do not do semantically correct comparison.
+
+## [DND Character](./dnd-character/README.md)
