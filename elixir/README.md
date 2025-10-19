@@ -1305,3 +1305,21 @@ intermediate results, it builds a series of computations that are only
 executed once the stream is passed to a function from the `Enum` module.
 
 ## [Two Fer](./two-fer/README.md)
+
+## [Library Fees](./library-fees/README.md)
+
+Date and time in Elixir literals:
+
+```elixir
+~D[2021-01-01] # D for Date
+~T[12:00:00] # T for Time
+~N[2021-01-01 12:00:00] # N for NaiveDateTime
+~U[2019-10-31 19:59:03Z] # U for DateTime with UTC timezone
+
+%DateTime{year: 2020, month: 12, day: 31, hour: 23, minute: 59, second: 59, time_zone: "Etc/UTC", zone_abbr: "UTC", utc_offset: 0, std_offset: 0}
+# => ~U[2020-12-31 23:59:59Z]
+```
+
+`Date`, `Time`, `NaiveDateTime` and `DateTime` modules contain functions for
+corresponding values. Use `compare`, `diff`, `before?` and `after?` to compare
+date and times, `>`, `<` and `==` do not do semantically correct comparison.
