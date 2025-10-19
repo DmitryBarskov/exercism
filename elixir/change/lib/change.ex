@@ -17,31 +17,43 @@ defmodule Change do
 
   @spec generate(list, integer) :: {:ok, list} | {:error, String.t()}
   def generate(coins, target) do
-    case recur(coins, target, %{}) do
-      {nil, _} -> {:error, "cannot change"}
-      {change, _} when is_list(change) -> {:ok, change}
+    case recur(coins, target) do
+      {:infinity, _} -> {:error, "cannot change"}
+      {_, change} -> {:ok, Enum.reverse(change)} # coins are collected in reverse order
     end
   end
 
-  defp recur(_, 0, memo), do: {[], memo}
-  defp recur(_, target, memo) when target < 0, do: {nil, memo}
-  defp recur([], target, memo) when target != 0, do: {nil, memo}
+  defp recur(
+         coins_left, # coins that can used, each coin can be used multiple times
+         target, # amount to change
+         current_coins \\ 0, # number of coins used already
+         acc \\ [], # coins used already
+         min_coins \\ :infinity, # minimum number of coins used for a successful change
+         min_acc \\ nil # actual coins used for a successful change
+       )
 
-  defp recur([c | rest_coins] = coins, target, memo) do
-    key = {coins, target}
+  # when collecting more coins, that minimum is, we already don't want to try to change more
+  defp recur(_, _, current_coins, _, min_coins, min_acc) when current_coins >= min_coins,
+    do: {min_coins, min_acc}
 
-    if Map.has_key?(memo, key) do
-      {memo[key], memo}
-    else
-      {skipped, memo} = recur(rest_coins, target, memo)
+  # changed too much
+  defp recur(_, target, _, _, min_coins, min_acc) when target < 0,
+    do: {min_coins, min_acc}
 
-      case recur(coins, target - c, memo) do
-        {change, new_memo} when is_nil(change) or length(change) >= length(skipped) ->
-          {skipped, Map.put(new_memo, key, skipped)}
+  # successful change, since the clause aboved are checked, this is new minimum
+  defp recur(_, 0, current_coins, acc, _, _),
+    do: {current_coins, acc}
 
-        {change, new_memo} ->
-          {[c | change], Map.put(new_memo, key, [c | change])}
-      end
-    end
+  # no coins left for change
+  defp recur([], _, _, _, min_coins, min_acc),
+    do: {min_coins, min_acc}
+
+  # first check when we use the largest available coin
+  # second check when we skip the largest available coin
+  defp recur([c | coins_left] = coins, target, current_coins, acc, min_coins, min_acc) do
+    {min_coins, min_acc} =
+      recur(coins, target - c, current_coins + 1, [c | acc], min_coins, min_acc)
+
+    recur(coins_left, target, current_coins, acc, min_coins, min_acc)
   end
 end
