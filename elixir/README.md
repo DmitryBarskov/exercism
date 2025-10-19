@@ -1296,3 +1296,10 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ## [Change](./change/README.md)
 
 ## [Collatz Conjecture](./collatz-conjecture/README.md)
+
+## [Lucas Numbers](./lucas-numbers/README.md)
+
+The `Stream` module is a _lazy_ alternative to the _eager_ `Enum` module.
+It offers many of the same functions as `Enum`, but instead of generating
+intermediate results, it builds a series of computations that are only
+executed once the stream is passed to a function from the `Enum` module.

@@ -19,17 +19,25 @@ defmodule Change do
   def generate(coins, target) do
     case recur(coins, target) do
       {:infinity, _} -> {:error, "cannot change"}
-      {_, change} -> {:ok, Enum.reverse(change)} # coins are collected in reverse order
+
+      # coins are collected in reverse order
+      {_, change} -> {:ok, Enum.reverse(change)}
     end
   end
 
   defp recur(
-         coins_left, # coins that can used, each coin can be used multiple times
-         target, # amount to change
-         current_coins \\ 0, # number of coins used already
-         acc \\ [], # coins used already
-         min_coins \\ :infinity, # minimum number of coins used for a successful change
-         min_acc \\ nil # actual coins used for a successful change
+         # coins that can used, each coin can be used multiple times
+         coins_left,
+         # amount to change
+         target,
+         # number of coins used already
+         current_coins \\ 0,
+         # coins used already
+         acc \\ [],
+         # minimum number of coins used for a successful change
+         min_coins \\ :infinity,
+         # actual coins used for a successful change
+         min_acc \\ nil
        )
 
   # when collecting more coins, that minimum is, we already don't want to try to change more
