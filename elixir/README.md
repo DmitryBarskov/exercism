@@ -1292,3 +1292,5 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ## [Armstrong Numbers](./armstrong-numbers/README.md)
 
 ## [Square Root](./square-root/README.md)
+
+## [Change](./change/README.md)
