@@ -1294,3 +1294,5 @@ Stack.pop(stack) #=> {:error, "Cannot pop from empty stack"}
 ## [Square Root](./square-root/README.md)
 
 ## [Change](./change/README.md)
+
+## [Collatz Conjecture](./collatz-conjecture/README.md)
