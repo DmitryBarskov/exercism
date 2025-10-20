@@ -1325,3 +1325,5 @@ corresponding values. Use `compare`, `diff`, `before?` and `after?` to compare
 date and times, `>`, `<` and `==` do not do semantically correct comparison.
 
 ## [DND Character](./dnd-character/README.md)
+
+## [Matrix](./matrix/README.md)
