@@ -1327,3 +1327,35 @@ date and times, `>`, `<` and `==` do not do semantically correct comparison.
 ## [DND Character](./dnd-character/README.md)
 
 ## [Matrix](./matrix/README.md)
+
+## [Bread And Potions](./bread-and-potions/README.md)
+
+Protocols are used to achieve polymorphism (like interfaces in OOP).
+Protocols are defined using `defprotocol` and contain one or more function
+headers.  A protocol can be implemented for any existing Elixir
+data type or for a struct.
+
+```elixir
+defprotocol Reversible do
+  def reverse(term)
+end
+
+defimpl Reversible, for: List do
+  def reverse(term) do
+    Enum.reverse(term)
+  end
+end
+
+Reversible.reverse([1, 2, 3]) #=> [3, 2, 1]
+Reversible.reverse({1, 2, 3})
+# ** (Protocol.UndefinedError) protocol Reversible not implemented for type Tuple
+
+defimpl Reversible, for: Tuple do
+  def reverse({}), do: {}
+  def reverse({x}), do: {x}
+  def reverse({a, b}), do: {b, a}
+  def reverse({a, b, c}), do: {c, b, a}
+end
+
+Reversible.reverse({1, 2, 3}) #=> {3, 2, 1}
+```
