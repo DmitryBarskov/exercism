@@ -1359,3 +1359,5 @@ end
 
 Reversible.reverse({1, 2, 3}) #=> {3, 2, 1}
 ```
+
+## [Robot Simulator](./robot-simulator/README.md)
