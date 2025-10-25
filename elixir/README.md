@@ -1363,3 +1363,28 @@ Reversible.reverse({1, 2, 3}) #=> {3, 2, 1}
 ## [Robot Simulator](./robot-simulator/README.md)
 
 ## [Clock](./clock/README.md)
+
+## [Stack Underflow](./stack-underflow/README.md)
+
+All errors in Elixir implement `Exception` behaviour, which has 2 callbacks:
+`message/1` which takes arguments from `raise/2` and returns an error struct,
+and `message/1` which takes an error struct and returns an error message.
+
+To conveniently define an exception use `defexception/1`
+with `:message` keyword.  It will add a `@behaviour` and
+default implementations for the callbacks you can override.
+
+```elixir
+defmodule MyError do
+  defexception [:message] # or defexception message: "default message"
+
+  # exception function can be overriden to construct an exception struct
+  # from `raise` arguments
+  @impl true
+  def exception([]), do: %MyError{message: "whithout arguments"}
+  def exception(value), do: %MyError{message: "alert: " <> value}
+end
+
+raise MyError # ** (MyError) whithout arguments
+raise MyError, "hello world" # ** (MyError) alert: hello world
+```
