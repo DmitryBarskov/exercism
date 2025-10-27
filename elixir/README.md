@@ -1388,3 +1388,7 @@ end
 raise MyError # ** (MyError) whithout arguments
 raise MyError, "hello world" # ** (MyError) alert: hello world
 ```
+
+## [Resistor Color](./resistor-color/README.md)
+
+## [Resistor Color Duo](./resistor-color-duo/README.md)
