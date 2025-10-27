@@ -1396,3 +1396,5 @@ raise MyError, "hello world" # ** (MyError) alert: hello world
 ## [Flatten Array](./flatten-array/README.md)
 
 ## [Space Age](./space-age/README.md)
+
+## [Triangle](./triangle/README.md)
