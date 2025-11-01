@@ -1398,3 +1398,15 @@ raise MyError, "hello world" # ** (MyError) alert: hello world
 ## [Space Age](./space-age/README.md)
 
 ## [Triangle](./triangle/README.md)
+
+## [File Sniffer](./file-sniffer/README.md)
+
+Repeating binary pattern matching
+
+```elixir
+<<0x41>> #=> "A"
+<<1>> #=> <<1>>
+<<257>> #=> <<1>> # overflow bits are truncated, 8 bits are used by default
+<<257::16>> #=> <<1, 1>> # use 16 bits
+<<first, rest::binary>> # use ::binary to match any number of bits
+```
