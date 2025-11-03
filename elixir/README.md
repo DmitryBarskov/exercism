@@ -1412,3 +1412,22 @@ Repeating binary pattern matching
 ```
 
 ## [Say](./say/README.md)
+
+## [Newsletter](./newsletter/README.md)
+
+Use `File.read/1` and `File.write/3` (or `File.open/2` with `IO` module)
+to work with files. There are `!` functions raising errors instead of returning
+tuples (e. g. `File.read!/1`, `File.write!/3` ).
+
+```elixir
+File.write("doc.txt", "Hello, world!") #=> :ok
+File.read("doc.txt") #=> {:ok, "Hello, world!"}
+File.read!("doc.txt") #=> "Hello, world!"
+File.mkdir("temp") #=> :ok
+File.write("temp", "Hello, world!") #=> {:error, :eisdir}
+
+File.write!("temp", "Hello, world!")
+# ** (File.Error) could not write to file "temp": illegal operation on a directory
+
+File.rm_rf("temp") #=> {:ok, ["temp"]}
+```
