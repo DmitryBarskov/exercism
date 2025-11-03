@@ -1410,3 +1410,5 @@ Repeating binary pattern matching
 <<257::16>> #=> <<1, 1>> # use 16 bits
 <<first, rest::binary>> # use ::binary to match any number of bits
 ```
+
+## [Say](./say/README.md)
