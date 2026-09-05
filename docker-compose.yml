@@ -30,8 +30,12 @@ services:
     build:
       args:
         <<: *default-args
-        TARGET_IMAGE: "gradle:jdk21-alpine"
+        TARGET_IMAGE: "eclipse-temurin:25-alpine"
     working_dir: /home/exercist/exercism/java
+    entrypoint: ["/docker/java-entrypoint.sh"]
+    volumes:
+      - ./docker/java-entrypoint.sh:/docker/java-entrypoint.sh:ro
+      - $HOME/.gradle:/home/exercist/.gradle
 
   ruby:
     <<: *default
