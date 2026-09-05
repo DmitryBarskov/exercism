@@ -1,14 +1,15 @@
 services:
   default: &default
+    user: "${DOCKER_UID:-1000}:${DOCKER_GID:-1000}"
     build:
       context: .
       args: &default-args
-        UID: "$UID"
-        GID: "$GID"
         TARGET_IMAGE: alpine
     volumes_from:
       - exercism-config
     working_dir: /home/exercist/exercism
+    environment: &default-env
+      HOME: /home/exercist
 
   exercism-config:
     image: alpine
@@ -24,20 +25,12 @@ services:
         TARGET_IMAGE: "elixir:alpine"
     working_dir: /home/exercist/exercism/elixir
 
-  go:
-    <<: *default
-    build:
-      args:
-        <<: *default-args
-        TARGET_IMAGE: golang:alpine
-    working_dir: /home/exercist/exercism/go
-
   java:
     <<: *default
     build:
       args:
         <<: *default-args
-        TARGET_IMAGE: gradle:jdk21-alpine
+        TARGET_IMAGE: "gradle:jdk21-alpine"
     working_dir: /home/exercist/exercism/java
 
   ruby:
