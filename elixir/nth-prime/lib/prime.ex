@@ -3,17 +3,17 @@ defmodule Prime do
   Generates the nth prime.
   """
   @spec nth(pos_integer()) :: pos_integer()
-  def nth(count) when count <= 0, do: raise RuntimeError, "only positive index"
-  def nth(count) do
-    infinite_range = Stream.unfold(1, fn n -> {n, n + 1} end)
-    Enum.reduce_while(infinite_range, {0, 1}, fn
-      _, {^count, last_prime} -> {:halt, last_prime}
-      candidate, {i, last_prime} -> if prime?(candidate) do
-        {:cont, {i + 1, candidate}}
-      else
-        {:cont, {i, last_prime}}
-      end
-    end)
+  def nth(count) when count <= 0, do: raise(RuntimeError, "only positive index")
+  def nth(count), do: nth(count, 1, 1)
+
+  @spec nth(pos_integer(), pos_integer(), pos_integer()) :: pos_integer()
+  defp nth(0, _, last_prime), do: last_prime
+  defp nth(count, candidate, last_prime) do
+    if prime?(candidate) do
+      nth(count - 1, candidate + 1, candidate)
+    else
+      nth(count, candidate + 1, last_prime)
+    end
   end
 
   @spec prime?(pos_integer()) :: boolean

@@ -1433,3 +1433,5 @@ File.write!("temp", "Hello, world!")
 
 File.rm_rf("temp") #=> {:ok, ["temp"]}
 ```
+
+## [Nth Prime](./nth-prime/README.md)
