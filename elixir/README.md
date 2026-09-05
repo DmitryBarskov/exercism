@@ -1,12 +1,14 @@
 # What I learned solving exercises in order
 
+[Elixir documentation](https://elixir.hexdocs.pm/Kernel.html)
+
 ## [Hello world](./hello-world/README.md)
 
-* [`mix test` - Elixir's test execution tool](https://hexdocs.pm/mix/Mix.Tasks.Test.html)
+* [`mix test` - Elixir's test execution tool](https://mix.hexdocs.pm/Mix.Tasks.Test.html)
 
 `mix test` command runs tests.
 
-* [`ExUnit` - Elixir's unit test library](https://hexdocs.pm/ex_unit/ExUnit.html)
+* [`ExUnit` - Elixir's unit test library](https://ex-unit.hexdocs.pm/ExUnit.html)
 
 File structure:
 ```
