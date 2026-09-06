@@ -288,11 +288,16 @@ ResponseHandling.handle_response({:success, :fail})
 
 ```elixir
 "Strings" <> " in " <> "Elixir"
+#=> "Strings in Elixir"
+
 "Interpolation is #{6 * 7}"
+#=> "Interpolation is 42"
+
 """
 and multiline
 strings
 """
+#=> "and multiline\nstrings\n"
 ```
 
 ### pipe operator
@@ -1435,3 +1440,31 @@ File.rm_rf("temp") #=> {:ok, ["temp"]}
 ```
 
 ## [Nth Prime](./nth-prime/README.md)
+
+## [Acronym](./acronym/README.md)
+
+A list can by typed in `@spec`:
+
+```elixir
+@spec abbreviate(list(number())) :: String.t()
+# or equivalent
+@spec abbreviate([number()]) :: String.t()
+```
+
+A list can be typed to contain different values in it
+```elixir
+# it takes a list that contains strings and numbers
+@spec abbreviate([number() | String.t()]) :: String.t()
+```
+
+A map can also be annotated
+```elixir
+# it takes a map with atom keys and integer values
+@spec foo(%{atom() => integer()}) :: any()
+```
+
+Type spec can contain literal values
+
+```elixir
+@spec foo(1 | 2 | 3)
+```
