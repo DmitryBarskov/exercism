@@ -1565,3 +1565,23 @@ To access a key in keyword list, you can use `Keyword.get/3` (`100.0` is the def
 ```elixir
 maximum_price = Keyword.get(options, :maximum_price, 100.0)
 ```
+
+## [Complex Numbers](./complex-numbers/README.md)
+
+Use math functions like so:
+
+```elixir
+:math.sqrt(9) #=> 3.0
+:math.cos(1.57) #=> 7.963e-4
+:math.exp(1) #=> 2.718281828459045
+```
+
+If there is a name collision, specify module like so:
+
+```elixir
+defmodule ComplexNumbers do
+  def div(a, b) when is_number(a), do: ComplexNumbers.div({a, 0}, b)
+  def div(a, b) when is_number(b), do: ComplexNumbers.div(a, {b, 0})
+  # ...
+end
+```
