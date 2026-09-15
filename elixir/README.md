@@ -254,7 +254,7 @@ These are tuples `{}`, `{42}`, `{:ok, 5, "hello"}`.
 
 Pattern matching works with tuples:
 ```elixir
-cond IO.puts("Hello, world!") do
+case IO.puts("Hello, world!") do
   {:error, reason} -> IO.puts(:stderr, "Could not print to stdio due to " <> reason)
   :eof -> IO.puts(:stderr, "stdio is closed")
   data -> IO.puts("successfully printed " <> data)
@@ -1585,3 +1585,5 @@ defmodule ComplexNumbers do
   # ...
 end
 ```
+
+## [Prism](./prism/README.md)
