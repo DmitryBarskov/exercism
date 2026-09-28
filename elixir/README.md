@@ -11,6 +11,7 @@
 * [`ExUnit` - Elixir's unit test library](https://ex-unit.hexdocs.pm/ExUnit.html)
 
 File structure:
+
 ```
 .
 ├── lib
@@ -21,9 +22,10 @@ File structure:
     └── test_helper.exs
 ```
 
-File `test_helper.exs` is optional:
+File `test_helper.exs` is optional.
 
 Test example:
+
 ```elixir
 defmodule HelloWorldTest do
   use ExUnit.Case
@@ -35,6 +37,7 @@ end
 ```
 
 `@doc` decorator defines a documentation string for a function:
+
 ```elixir
 defmodule SomeModule do
   @doc "Prints 'Hello, world!' to stdout"
@@ -45,6 +48,7 @@ end
 ```
 
 Then in `iex` the module can be compiled and the doc can be shown:
+
 ```elixir
 iex(1)> c("some_module.ex", ".")
 [SomeModule]
@@ -55,6 +59,7 @@ iex(2)> h(SomeModule.some_function)
 
 `@spec` defines type for a function, [dailyxir](https://github.com/jeremyjh/dialyxir)
 can be used for type checking.
+
 ```elixir
 defmodule BirdCount do
   @doc "returns today's bird count"
@@ -66,7 +71,7 @@ end
 
 ## [Lasagna](./lasagna/README.md)
 
-Functions in Elixir must be in modules, `defmodule` creates a moudle,
+Functions in Elixir must be in modules, `defmodule` creates a module,
 `def` creates a function, `defp` creates a private function:
 
 ```elixir
@@ -80,6 +85,7 @@ SomeModule.some_function # prints Hello, world!
 ```
 
 Elixir is dynamically typed, we can re-bind variables:
+
 ```elixir
 count = 1
 count = count + 1
@@ -97,7 +103,7 @@ end
 
 Variables are named in _snake_case_. They can end with `?` (question mark).
 Use values `true` and `false`, operators `and/2`, `or/2` and `not/1` for
-boolean expressions.
+Boolean expressions.
 
 ```elixir
 success? = false
@@ -114,17 +120,18 @@ There are `Float.floor`, `Float.ceil`, `Float.round`, `Kernel.floor`,
 Functions in `Float` module take 2 arguments and do rounding
 to the specified digit,
 while `Kernel` ones take one argument and round to an integer.
+
 ```elixir
 Float.round(5.5675, 3) #=> 5.567
 ceil(10.1) #=> 11
 ```
 
 To drop floating point part use `Kernel.trunc/1`. `Kernel` functions can be
-called wihtout module name: `Kernel.trunc(3.4) #=> 3` and `trunc(3.4) #=> 3`.
+called without module name: `Kernel.trunc(3.4) #=> 3` and `trunc(3.4) #=> 3`.
 
 ## [Log Level](./log-level/README.md)
 
-Use cond for if-else-if kind of logic.
+Use `cond` for if-else-if kind of logic.
 
 ```elixir
 cond do
@@ -142,14 +149,16 @@ Equality: `1 == 1.0 #=> true` and stricter version `1 === 1.0 #=> false`.
 
 ## [Language List](./language-list/README.md)
 
-List is a built-in type in elixir implemneted by linked list. They can include
+List is a built-in type in elixir implemented by linked list. They can include
 different types.
+
 ```elixir
 some_list = [1, "2", :three]
 ```
 
 `|` is used to prepending an item to list, but the whole new list must be
 wrapped with `[]`:
+
 ```elixir
 [0 | some_list]
 [1 | [2 | [3]]] = [1, 2, 3]
@@ -157,6 +166,7 @@ wrapped with `[]`:
 ```
 
 Some basic functions to work with lists:
+
 ```elixir
 1 in [1, 2, 3] = true # check if element is in list
 [1 | [3, 4, 5]] = [1, 3, 4, 5] # prepend
@@ -167,9 +177,10 @@ tl [1, 2, 3] = [2, 3] # elements except first
 length([1, 2, 3]) = 3 # length of list
 ```
 
-Objects can't be mutated. The statemnt `count = count + 1` actually _re-binds_
+Objects can't be mutated. The statement `count = count + 1` actually _re-binds_
 `count`. So when adding an item to a list we have to re-bind the variable we
 store the list in:
+
 ```elixir
 language_list = LanguageList.new() # => []
 language_list = LanguageList.add(language_list, "Clojure") # => ["Clojure"]
@@ -216,9 +227,10 @@ end
 
 ## [Guessing Game](./guessing-game/HINTS)
 
-Elixir functions can have multiple definitions (clauses).
-Pattern matching works in function parameters. The first matching function
-clause will be invoked.
+Elixir functions can have multiple definitions (clauses).  Pattern matching
+works in function parameters. The first matching function clause will be
+invoked.
+
 ```elixir
 def even?(0), do: true
 def even?(1), do: false
@@ -226,18 +238,19 @@ def even?(2), do: true
 def even?(3), do: false
 ```
 
-Use gaurd clauses for more complex matching, but still
-guard clauses can only be guards and combination of them. Guards in Elixir
-are simple functions and macros.
-Unused parameters should start with `_` (underscore).
+Use guard clauses for more complex matching, but still guard clauses can only
+be guards and combination of them. Guards in Elixir are simple functions and
+macros.  Unused parameters should start with `_` (underscore).
+
 ```elixir
 def even?(n) when n % 2 == 0, do: true
 def even?(_), do: false
 ```
 
-Use separate function definition for default parameter values
-when function have multiple clauses (parameters with default values can precede
-parameter without default values).
+Use separate function definition for default parameter values when function
+have multiple clauses (parameters with default values can precede parameter
+without default values).
+
 ```elixir
 def number_to_string(number, radix \\ 10)
 def number_to_string(1, _), do: "1"
@@ -247,12 +260,13 @@ def number_to_string(3, 2), do: "11"
 
 ## [Kitchen Calculator](./kitchen-calculator/README.md)
 
-Tuples are like immutable arrays that can hold values with different data types.
-These are tuples `{}`, `{42}`, `{:ok, 5, "hello"}`.
+Tuples are like immutable arrays that can hold values with different data
+types.  These are tuples `{}`, `{42}`, `{:ok, 5, "hello"}`.
 
 `Kernel.elem/2` can be used to access tuples' items. `elem({:ok, 42}, 1) # => 42`.
 
 Pattern matching works with tuples:
+
 ```elixir
 case IO.puts("Hello, world!") do
   {:error, reason} -> IO.puts(:stderr, "Could not print to stdio due to " <> reason)
@@ -262,6 +276,7 @@ end
 ```
 
 Pattern matching in named functions:
+
 ```elixir
 defmodule ResponseHandling do
   def handle_response({:ok, data}) do
@@ -315,8 +330,8 @@ Left operand of `|>` is passed as the first argument to next function call.
 
 Learn about `Integer.pow`, `Float.pow`, `Kernel.abs`.
 
-If a function in the module has the same name as in `Kernel`, it must be referred
-with module name:
+If a function in the module has the same name as in `Kernel`, it must be
+referred with module name:
 
 ```elixir
 defmodule RationalNumbers do
@@ -346,11 +361,11 @@ end
 is_even = if Integer.mod(42, 2), do: :yes, else: :no
 ```
 
-`if` can take not only boolean values, but all values.
-But only `false` and `nil` behave as `false`, all other values behave as `true`.
+`if` can take not only Boolean values, but all values.  But only `false` and
+`nil` behave as `false`, all other values behave as `true`.
 
-While `not`, `and` etc can be used only for boolean values,
-`!`, `&&`, `||` can be used for all values including booleans.
+While `not`, `and` etc can be used only for Boolean values, `!`, `&&`, `||` can
+be used for all values including Boolean ones.
 
 ## [Wine Cellar](./wine-cellar/README.md)
 
@@ -389,8 +404,13 @@ KwList.matching(year: 1988, country: "France", model: "A320") # can omit [ and ]
 
 To create an Elixir process use `spawn/1` (don't confuse with OS processes).
 `spawn` takes a function to execute and returns a PID.
-`spawn(fn -> 2 + 2 end) # => #PID<0.125.0>`
-Send a message to a process using `send/2` which takes a PID and a value to send.
+
+```elixir
+spawn(fn -> 2 + 2 end) # => #PID<0.125.0>
+```
+
+Send a message to a process using `send/2` which takes a PID and a value to
+send.
 
 ```elixir
 send(self, :test)
@@ -402,7 +422,8 @@ end
 ```
 
 `receive/1` takes only one message from the mailbox. If there are no messages
-in the mailbox, it will block current's process execution until message is sent.
+in the mailbox, it will block current's process execution until message is
+sent.
 
 `&function/arity` syntax can be used to pass it to `spawn`:
 
@@ -435,9 +456,10 @@ Map.get(%{a: 2}, :b, 3) #=> 3
 `filter/2`, `get_and_update/3`, `has_key?/2`, `put/3`, `update/4`, `to_list/1`,
 `values/1`, `keys/1`, `new/1`, `delete/2`.
 
-In Elixir, we can define module attributes which can be used as constants in our functions.
-Their value can be any expression which can be evaluated at compilation time.
-After compilation, module attributes are not accessible since they are expanded during compilation.
+In Elixir, we can define module attributes which can be used as constants in
+our functions.  Their value can be any expression which can be evaluated at
+compilation time.  After compilation, module attributes are not accessible
+since they are expanded during compilation.
 
 ```elixir
 defmodule Example do
@@ -481,7 +503,8 @@ defimpl Reversible, for: List do
 end
 
 Reversible.reverse([1, 2, 3]) #=> [3, 2, 1]
-Reversible.reverse(%{}) #=> ** (Protocol.UndefinedError) protocol Reversible not implemented for type Map
+Reversible.reverse(%{})
+#=> ** (Protocol.UndefinedError) protocol Reversible not implemented for type Map
 ```
 
 ## [Log Parser](./log-parser/README.md)
@@ -528,7 +551,7 @@ The available delimiters are: `//`, `||`, `""`, `''`, `()`, `[]`, `{}`, `<>`.
 
 ## [Remote Control Car](./remote-control-car/README.md)
 
-Struct in elixir are built based on maps.
+`Struct`s in elixir are built based on maps.
 
 ```elixir
 defmodule Plane do
@@ -572,13 +595,16 @@ end
 ## [RPN Calculator](./rpn-calculator/README.md)
 
 In elixir methods with `!` raise errors.
+
 ```elixir
 Map.fetch(%{a: 1}, :b) #=> :error
 Map.fetch!(%{a: 1}, :b) #=> ** (KeyError) key :b not found in: %{a: 1}
 ```
+
 But preferred way is to handle returned values.
 
 Still errors can be thrown and caught like this:
+
 ```elixir
 try do
   raise RuntimeError, "something went wrong"
@@ -620,7 +646,7 @@ end #=> {:my_error, "Hello world!"}
 > rescue all possible error cases without the full context of when and
 > how they can happen.
 
-### Reraise
+### Re-raise
 
 Sometimes errors are needed, e.g. for logging and observability:
 
@@ -665,6 +691,7 @@ Processes isolated by default, but can be linked using `spawn_link/1` or
 
 Parent process spawns another process, it crashes. Then "You OK?" is sent to
 parent to check if it is alive.
+
 ```elixir
 parent = spawn(fn ->
   child = spawn(fn -> raise "Child: oops!" end)
@@ -681,6 +708,7 @@ end #=> "Received 'Parent: I'm still OK'"
 
 Same example, but child process is being spawned using `spawn_link/1`,
 parent does not respond to "You OK?".
+
 ```elixir
 parent = spawn(fn ->
   child = spawn_link(fn -> raise "Child: oops!" end)
@@ -698,6 +726,7 @@ end # *no response, press ^C*
 ```
 
 Parent process can receive information about exiting of children:
+
 ```elixir
 parent = spawn(fn ->
   Process.flag(:trap_exit, true)
@@ -724,7 +753,7 @@ end #=> "Received 'Parent: I'm still OK'"
 ### Tasks
 
 `Task.async/1` creates an asynchronous task, returning `%Task{}` struct.
-To wait it to complate use `Task.await/2` function with timeout.
+To wait it to complete use `Task.await/2` function with timeout.
 
 ```elixir
 t = Task.async(fn -> "Result from async task!" end)
@@ -758,7 +787,8 @@ iex(3)> ~c"ABC" |> hd
 65
 ```
 
-`case` is like cond, but works with given value:
+`case` is like `cond`, but works with given value:
+
 ```elixir
 age = 18
 
@@ -864,7 +894,9 @@ with {:ok, result1} <- func1(),
 ```elixir
 Enum.reduce_while(1..10, 0, fn
   _, sum when sum > 20 -> {:halt, :infinity} # :halt will break execution early
-  num, sum -> {:cont, sum + num} # if :halt not returned it will behave just like regular reduce/3
+
+  # if :halt not returned it will behave just like regular reduce/3
+  num, sum -> {:cont, sum + num}
 end)
 ```
 
@@ -874,7 +906,8 @@ Also learned about `Stream.unfold/2` after a review:
 Stream.unfold({10928, []}, fn
   nil -> nil
   {0, _} = current_value -> {current_value, nil}
-  {rest, ds} = current_value -> {current_value, {div(rest, 10), [rem(rest, 10) | ds] }}
+  {rest, ds} = current_value ->
+    {current_value, {div(rest, 10), [rem(rest, 10) | ds] }}
 end)
 #=> [
 #  {10928, []},
@@ -886,11 +919,14 @@ end)
 #]
 ```
 
-It was not super convenient, since unfold returns the last `current_value`, not the next!
+It was not super convenient, since unfold returns the last `current_value`, not
+the next!
+
 ```elixir
 Stream.unfold({10928, []}, fn
   {0, _} -> nil
-  {rest, ds} = current_value -> {current_value, {div(rest, 10), [rem(rest, 10) | ds] }}
+  {rest, ds} = current_value ->
+    {current_value, {div(rest, 10), [rem(rest, 10) | ds] }}
 end)
 #=> [
 #  {10928, []},
@@ -918,7 +954,8 @@ Enum.to_list(1..5//2)
 
 Use `Enum.random` to pick an element from list, range etc.
 
-An Erlang func should be called from its module. Erlang modules are snake cased.
+An Erlang function should be called from its module. Erlang modules are snake
+cased.
 
 ```elixir
 :math.pi() #=> 3.141592653589793
@@ -998,7 +1035,7 @@ h(MyModule.func)
 
 Most commonly used types include:
 
-- booleans: `boolean()`
+- Boolean: `boolean()`
 - strings: `String.t()`
 - numbers: `integer()`, `non_neg_integer()`, `pos_integer()`, `float()`
 - lists: `list()`, `nonempty_list()`, maps: `map()`
@@ -1007,7 +1044,8 @@ Most commonly used types include:
 - tuple of any size `tuple()`
 - tuples with fixed size `{:ok, integer()}`
 
-Some types can also be parameterized, for example `list(integer)` is a list of integers.
+Some types can also be parameterized, for example `list(integer)` is a list of
+integers.
 
 Literal values can also be used as types.
 
@@ -1090,7 +1128,7 @@ end
 ## [Top Secret](./top-secret/README.md)
 
 AST also called a quoted expression in Elixir represents a piece of code, it
-is used for metaprogramming. `Code` and `Macro` modules are used to manipulate
+is used for meta programming. `Code` and `Macro` modules are used to manipulate
 AST.
 
 ```elixir
@@ -1103,14 +1141,17 @@ end
 #  [2, 3]
 # }
 ```
-So tuple returned by `quote` special form consist of an atom, the operation,
-a keyword list, the metadata, and a list of arguments, which contains other nodes.
+
+So tuple returned by `quote` special form consist of an atom, the operation, a
+keyword list, the metadata, and a list of arguments, which contains other
+nodes.
 
 ## [Basketball Website](./basketball-website/README.md)
 
 ### Behaviours
 
-Behaviours can be referenced by modules to ensure they implement required specific function signatures defined by @callback.
+Behaviours can be referenced by modules to ensure they implement required
+specific function signatures defined by @callback.
 
 ```elixir
 defmodule Person do
@@ -1204,7 +1245,7 @@ but you can always define functions in another module and import them
 in the `__using__/1` macro.
 
 To make it possible for users of the behaviour module to override
-the default implementation, call the defoverridable/1 macro
+the default implementation, call the `defoverridable/1` macro
 after the function implementation
 
 ```elixir
@@ -1231,7 +1272,7 @@ The `GenServer` behaviour defines one required callback, `init/1`,
 and a few interesting optional callbacks: `handle_call/3`, `handle_cast/2`,
 and `handle_info/3`. The clients using a `GenServer` aren't supposed to call
 those callbacks directly. Instead, the `GenServer` module provides functions
-that clients can use to communicate with a GenServer process.
+that clients can use to communicate with a `GenServer` process.
 
 Often, a single module defines both a client API, a set of functions
 that other parts of your Elixir app can call to communicate
@@ -1424,7 +1465,7 @@ Repeating binary pattern matching
 
 Use `File.read/1` and `File.write/3` (or `File.open/2` with `IO` module)
 to work with files. There are `!` functions raising errors instead of returning
-tuples (e. g. `File.read!/1`, `File.write!/3` ).
+tuples (e.g. `File.read!/1`, `File.write!/3` ).
 
 ```elixir
 File.write("doc.txt", "Hello, world!") #=> :ok
@@ -1443,9 +1484,11 @@ File.rm_rf("temp") #=> {:ok, ["temp"]}
 
 Using `mix` utility to run tests:
 
-- use `mix test --include pending` to run all tests (`mix test` excludes tests tagged `pending` by default)
+- use `mix test --include pending` to run all tests (`mix test` excludes tests
+  tagged `pending` by default)
 - use `mix test --only task_id:2` to run only tests tagged `task_id: 2`
-- use `mix test --exclude task_id:2` to run everything except those tagged `task_id: 2`
+- use `mix test --exclude task_id:2` to run everything except those tagged
+  `task_id: 2`
 
 ```elixir
 defmodule PrimeTest do
@@ -1500,8 +1543,8 @@ Type spec can contain literal values
 
 ### List Comprehensions
 
-List comprehensions allow to transform Enumerables with special declarative syntax.
-Use `for` keyword followed by a generator and a do-block.
+List comprehensions allow to transform `Enumerable`s with special declarative
+syntax.  Use `for` keyword followed by a generator and a do-block.
 
 ```elixir
 for n <- [0, 1, 2, 3], do: n + 1
@@ -1527,7 +1570,7 @@ end
 # => [:f]
 ```
 
-A cartesian product can be created using multiple generators.
+A Cartesian product can be created using multiple generators.
 That means that each value generated by the first generator will be paired once
 with each value generated by the second generator:
 
@@ -1560,7 +1603,8 @@ defmodule BoutiqueSuggestions do
 end
 ```
 
-To access a key in keyword list, you can use `Keyword.get/3` (`100.0` is the default here):
+To access a key in keyword list, you can use `Keyword.get/3` (`100.0` is the
+default here):
 
 ```elixir
 maximum_price = Keyword.get(options, :maximum_price, 100.0)
@@ -1589,3 +1633,5 @@ end
 ## [Prism](./prism/README.md)
 
 ## [Sublist](./sublist/README.md)
+
+## [Piecing it together](./piecing-it-together/README.md)
