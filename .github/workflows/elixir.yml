@@ -13,15 +13,15 @@ jobs:
   build:
 
     name: Build and test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
-        elixir-version: '1.15.2' # [Required] Define the Elixir version
-        otp-version: '26.0'      # [Required] Define the Erlang/OTP version
+        elixir-version: '1.20.4' # [Required] Define the Elixir version
+        otp-version: '29.0'      # [Required] Define the Erlang/OTP version
     - name: Restore dependencies cache
       uses: actions/cache@v3
       with:
