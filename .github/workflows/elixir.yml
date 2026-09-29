@@ -19,7 +19,7 @@ jobs:
         dirs: ["[a-c]", "[d-l]", "[m-r]", "[s-z]"]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Set up Elixir
       uses: erlef/setup-beam@v1
       with:
