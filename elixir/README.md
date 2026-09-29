@@ -1636,6 +1636,21 @@ end
 
 ## [Piecing it together](./piecing-it-together/README.md)
 
+## [Gotta Snatch'Em All](./gotta-snatch-em-all/README.md)
+
+For sets use `MapSet` module.
+
+```elixir
+MapSet.new([1, 2, 3, 1, 2, 3, "foo", "bar", "foo"])
+#=> MapSet.new([1, 2, 3, "bar", "foo"])
+```
+
+`MapSet`s are not ordered. Use `MapSet.new/0`, `MapSet.new/1`, `MapSet.put/2`,
+`MapSet.member?/2` and `MapSet.delete/2` for common set operations.
+
+For more complex operations refer to
+[MapSet doc](https://elixir.hexdocs.pm/MapSet.html#functions).
+
 ## [New Passport](./new-passport/README.md)
 
 ### with special form
