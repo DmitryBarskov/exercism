@@ -1,0 +1,38 @@
+name: Go CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "go/**"
+      - ".github/workflows/go.yml"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "go/**"
+      - ".github/workflows/go.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Go
+      uses: actions/setup-go@v7
+      with:
+        go-version: "1.26"
+    - name: "Run tests in go/"
+      run: |
+        for godir in go/*/; do
+          echo "####################################"
+          echo "# Testing '$godir' ... #"
+          cd $godir
+          go test
+          cd -
+          echo "\n"
+        done

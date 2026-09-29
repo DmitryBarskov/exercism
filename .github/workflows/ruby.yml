@@ -1,0 +1,30 @@
+name: Ruby CI
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "ruby/**"
+      - ".github/workflows/ruby.yml"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - "ruby/**"
+      - ".github/workflows/ruby.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: "4.0"
+    - name: "Run tests in ruby/"
+      run: minitest ruby/
