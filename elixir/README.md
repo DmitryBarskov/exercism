@@ -1635,3 +1635,53 @@ end
 ## [Sublist](./sublist/README.md)
 
 ## [Piecing it together](./piecing-it-together/README.md)
+
+## [New Passport](./new-passport/README.md)
+
+### with special form
+
+`with` follows "happy path" until something else is met:
+
+```elixir
+with {:ok, num} <- Map.fetch(%{a: 2}, :a) do
+  num + 2
+end
+#=> 4
+
+with {:ok, num} <- Map.fetch(%{b: 2}, :c) do
+  num + 2
+end
+#=> :error
+```
+
+In the first example `Map.fetch` returns `{:ok, 2}`, which matches with the
+pattern and the flow continues to the `do` block. In the second example
+`Map.fetch` returns `:error`, which causes the flow to interrupt and skip the
+`do` block. `with` can have multiple continuous statements, if some of the
+patterns won't match, it will break the execution there.
+
+```elixir
+with :ok <- IO.puts("this line is visible"),
+     :ok <- IO.puts("this line will be shown as well"),
+     :error <- IO.puts("this line will be shown, but the pattern won't match"),
+     :ok <- IO.puts("this line will never be shown") do
+  IO.puts("you can see this only if all the lines were printed")
+end
+# this line is visible
+# this line will be shown as well
+# this line will be shown, but the pattern won't match
+#=> :ok # the last unmatched value is returned
+```
+
+You can handle unmatched value and return something else in `else` block:
+
+```elixir
+with {:ok, 42} <- Map.fetch(%{a: 2}, :a) do
+  "42 indeed"
+else
+  {:ok, other_number} -> "not a 42: #{other_number}"
+  :error -> "the :a key not found"
+  value -> "something completely unexpected from Map.fetch: #{inspect(value)}"
+end
+#=> "not a 42: 2"
+```
