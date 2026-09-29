@@ -11,9 +11,12 @@ permissions:
 
 jobs:
   build:
-
     name: Build and test
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dirs: ["[a-g]", "[h-n]", "[o-u]", "[v-z]"]
 
     steps:
     - uses: actions/checkout@v4
@@ -28,9 +31,9 @@ jobs:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: Run tests
+    - name: "Run tests (elixir/${{ matrix.dirs }}*/)"
       run: |
-        for edir in elixir/*/; do
+        for edir in elixir/${{ matrix.dirs }}*/; do
           echo "##############################"
           echo "# Testing '$edir' ... #"
           cd $edir
