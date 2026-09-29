@@ -16,7 +16,7 @@ jobs:
 
     strategy:
       matrix:
-        dirs: ["[a-g]", "[h-n]", "[o-u]", "[v-z]"]
+        dirs: ["[a-c]", "[d-l]", "[m-r]", "[s-z]"]
 
     steps:
     - uses: actions/checkout@v4
@@ -34,11 +34,11 @@ jobs:
     - name: "Run tests (elixir/${{ matrix.dirs }}*/)"
       run: |
         for edir in elixir/${{ matrix.dirs }}*/; do
-          echo "##############################"
+          echo "####################################"
           echo "# Testing '$edir' ... #"
           cd $edir
           mix deps.get
           mix test --include pending
           cd -
-          echo "##############################"
+          echo "\n"
         done
