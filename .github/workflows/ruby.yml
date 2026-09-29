@@ -3,8 +3,14 @@ name: Ruby CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "ruby/**"
+      - ".github/workflows/ruby.yml"
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "ruby/**"
+      - ".github/workflows/ruby.yml"
 
 permissions:
   contents: read
@@ -19,6 +25,6 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '4.0'
+        ruby-version: "4.0"
     - name: "Run tests in ruby/"
       run: minitest ruby/
