@@ -23,6 +23,7 @@ defmodule Newsletter do
     emails = read_emails(emails_path)
 
     log_pid = open_log(log_path)
+
     Enum.each(emails, fn email ->
       if send_fun.(email) == :ok do
         log_sent_email(log_pid, email)

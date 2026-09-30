@@ -19,7 +19,6 @@ defmodule Change do
   def generate(coins, target) do
     case recur(coins, target) do
       {:infinity, _} -> {:error, "cannot change"}
-
       # coins are collected in reverse order
       {_, change} -> {:ok, Enum.reverse(change)}
     end

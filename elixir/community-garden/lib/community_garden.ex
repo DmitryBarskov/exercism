@@ -19,13 +19,16 @@ defmodule CommunityGarden do
       fn {last_id, registrations} ->
         next_id = last_id + 1
         registration = %Plot{plot_id: next_id, registered_to: register_to}
+
         state = {
           next_id,
           Map.put(registrations, next_id, registration)
         }
+
         {state, state}
       end
-    ) |> then(fn {last_id, registrations} -> registrations[last_id] end)
+    )
+    |> then(fn {last_id, registrations} -> registrations[last_id] end)
   end
 
   def release(pid, plot_id) do
@@ -41,7 +44,7 @@ defmodule CommunityGarden do
     Agent.get(
       pid,
       fn {_, registrations} ->
-        Map.get(registrations, plot_id,  {:not_found, "plot is unregistered"})
+        Map.get(registrations, plot_id, {:not_found, "plot is unregistered"})
       end
     )
   end

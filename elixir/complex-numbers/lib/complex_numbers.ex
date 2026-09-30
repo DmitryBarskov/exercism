@@ -25,6 +25,7 @@ defmodule ComplexNumbers do
   @spec mul(a :: complex | number, b :: complex | number) :: complex
   def mul(a, b) when is_number(a), do: mul({a, 0}, b)
   def mul(a, b) when is_number(b), do: mul(a, {b, 0})
+
   def mul({a_r, a_im}, {b_r, b_im}) do
     {a_r * b_r - a_im * b_im, a_r * b_im + b_r * a_im}
   end
@@ -51,6 +52,7 @@ defmodule ComplexNumbers do
   @spec div(a :: complex | number, b :: complex | number) :: complex
   def div(a, b) when is_number(a), do: ComplexNumbers.div({a, 0}, b)
   def div(a, b) when is_number(b), do: ComplexNumbers.div(a, {b, 0})
+
   def div({a_r, a_im}, {b_r, b_im}) do
     b_abs_sqr = b_r * b_r + b_im * b_im
 

@@ -14,10 +14,10 @@ defmodule TopSecret do
         {ast, [secret | acc]}
 
       # zero arity
-      {_, _, [{_name, _, nil} | _ ]} ->
+      {_, _, [{_name, _, nil} | _]} ->
         {ast, ["" | acc]}
 
-      {_, _, [{name, _, params} | _ ]} ->
+      {_, _, [{name, _, params} | _]} ->
         arity = Enum.count(params)
         secret = Atom.to_string(name) |> String.slice(0, arity)
         {ast, [secret | acc]}
@@ -31,7 +31,7 @@ defmodule TopSecret do
     |> to_ast
     |> Macro.postwalk([], &decode_secret_message_part/2)
     |> elem(1)
-    |> Enum.reverse
-    |> Enum.join
+    |> Enum.reverse()
+    |> Enum.join()
   end
 end

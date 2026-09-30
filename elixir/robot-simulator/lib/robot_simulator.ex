@@ -55,7 +55,8 @@ defmodule RobotSimulator do
             {dx, dy} = @dir[direction]
             {:cont, %{state | position: {x + dx, y + dy}}}
 
-          _ -> {:halt, {:error, "invalid instruction"}}
+          _ ->
+            {:halt, {:error, "invalid instruction"}}
         end
       end
     )
