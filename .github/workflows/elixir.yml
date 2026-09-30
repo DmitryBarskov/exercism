@@ -20,9 +20,10 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
-      - id: set-matrix
-        run: |
-          git diff --name-only main @ | sed 's/^elixir\/([^\/]+)\/.+/"\1"/' | sort | uniq | jq -s . >> $GITHUB_OUTPUT
+    - uses: actions/checkout@v7
+    - id: set-matrix
+      run: |
+        git diff --name-only main @ | sed 's/^elixir\/([^\/]+)\/.+/"\1"/' | sort | uniq | jq -s . >> $GITHUB_OUTPUT
 
   build:
     name: Build and test
