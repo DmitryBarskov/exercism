@@ -35,7 +35,8 @@ jobs:
     needs: diff
 
     strategy:
-      matrix: ${{ fromJSON(needs.diff.outputs.exercises) }}
+      matrix:
+        dir: ${{ fromJSON(needs.diff.outputs.exercises) }}
 
     steps:
     - uses: actions/checkout@v7
@@ -50,9 +51,9 @@ jobs:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: "Run tests (elixir/${{ matrix.dirs }}*/)"
+    - name: "Run tests (elixir/${{ matrix.dir }}*/)"
       run: |
-        for edir in elixir/${{ matrix.dirs }}*/; do
+        for edir in elixir/${{ matrix.dir }}*/; do
           echo "####################################"
           echo "# Testing '$edir' ... #"
           cd $edir
