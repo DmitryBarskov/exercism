@@ -5,11 +5,11 @@ on:
     branches: [ "main" ]
     paths:
       - "elixir/**"
-      - ".github/workflows/elixir.yml"
+      - ".github/workflows/elixir-full.yml"
   pull_request:
     branches: [ "main" ]
     paths:
-      - ".github/workflows/elixir.yml"
+      - ".github/workflows/elixir-full.yml"
 
 permissions:
   contents: read
