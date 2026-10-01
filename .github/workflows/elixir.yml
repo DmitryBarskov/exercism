@@ -16,13 +16,32 @@ permissions:
   contents: read
 
 jobs:
+  diff:
+    name: Determine directories to be tested
+    runs-on: ubuntu-latest
+    outputs:
+      dirs: ${{ steps.set-matrix.outputs.dirs }}
+    steps:
+    - uses: actions/checkout@v7
+    - id: set-matrix
+      run: |
+        DIRS_JSON='[]'
+        if [ "${{ github.event_name }}" = "push" ]; then
+          DIRS_JSON=$(find elixir/ -type dir -depth 1 | sed -E 's|^elixir/([^\]+)|"\1"|' | sort -u | jq -sc .)
+        else
+          git fetch origin main
+          DIRS_JSON=$(git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort -u | jq -sc .)
+        fi
+        echo "dirs=$DIRS_JSON" >> "$GITHUB_OUTPUT"
+
   build:
     name: Build and test
     runs-on: ubuntu-latest
+    needs: diff
 
     strategy:
       matrix:
-        dirs: ["[a-c]", "[d-l]", "[m-r]", "[s-z]"]
+        exercise: ${{ fromJSON(needs.diff.outputs.dirs) }}
 
     steps:
     - uses: actions/checkout@v7
@@ -37,14 +56,8 @@ jobs:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: "Run tests (elixir/${{ matrix.dirs }}*/)"
+    - name: Run tests
       run: |
-        for edir in elixir/${{ matrix.dirs }}*/; do
-          echo "####################################"
-          echo "# Testing '$edir' ... #"
-          cd $edir
-          mix deps.get
-          mix test --include pending
-          cd -
-          echo "\n"
-        done
+        cd elixir/${{ matrix.exercise }}/
+        mix deps.get
+        mix test --include pending

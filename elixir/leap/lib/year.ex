@@ -10,7 +10,7 @@ defmodule Year do
   """
   @spec leap_year?(non_neg_integer) :: boolean
   def leap_year?(year) do
-    divisible?(year, 400) or divisible?(year, 4) and not divisible?(year, 100)
+    divisible?(year, 400) or (divisible?(year, 4) and not divisible?(year, 100))
   end
 
   defp divisible?(number, divisor), do: rem(number, divisor) == 0

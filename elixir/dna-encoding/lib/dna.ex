@@ -14,6 +14,7 @@ defmodule DNA do
   def encode(dna), do: encode(dna, "")
 
   defp encode([], acc), do: acc
+
   defp encode([amino | rest], acc) do
     encode(rest, <<acc::bitstring, encode_nucleotide(amino)::4>>)
   end
@@ -21,6 +22,7 @@ defmodule DNA do
   def decode(dna), do: decode(dna, [])
 
   defp decode("", acc), do: reverse(acc)
+
   defp decode(<<amino::4, rest::bitstring>>, acc) do
     decode(rest, [decode_nucleotide(amino) | acc])
   end
