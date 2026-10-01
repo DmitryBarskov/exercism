@@ -1,0 +1,49 @@
+name: Elixir CI (full)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "elixir/**"
+      - ".github/workflows/elixir.yml"
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - ".github/workflows/elixir.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        dirs: ["[a-c]", "[d-l]", "[m-r]", "[s-z]"]
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Set up Elixir
+      uses: erlef/setup-beam@v1
+      with:
+        elixir-version: '1.20.4' # [Required] Define the Elixir version
+        otp-version: '29.0'      # [Required] Define the Erlang/OTP version
+    - name: Restore dependencies cache
+      uses: actions/cache@v6
+      with:
+        path: deps
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+    - name: "Run tests (elixir/${{ matrix.dirs }}*/)"
+      run: |
+        for edir in elixir/${{ matrix.dirs }}*/; do
+          echo "####################################"
+          echo "# Testing '$edir' ... #"
+          cd $edir
+          mix deps.get
+          mix test --include pending
+          cd -
+          echo "\n"
+        done
