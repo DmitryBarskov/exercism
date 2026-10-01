@@ -20,7 +20,7 @@ jobs:
     name: Determine changed directories
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.dirs }}
+      dirs: ${{ steps.set-matrix.outputs.dirs }}
     steps:
     - uses: actions/checkout@v7
     - id: set-matrix
