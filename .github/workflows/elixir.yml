@@ -27,7 +27,7 @@ jobs:
       run: |
         DIRS_JSON='[]'
         if [ "${{ github.event_name }}" = "push" ]; then
-          DIRS_JSON=$(find elixir/ -type dir -depth 1 | sed -E 's|^elixir/([^\]+)|"\1"|' | sort -u | jq -sc .)
+          DIRS_JSON=$(find elixir/ -maxdepth 1 -mindepth 1 -type d | sed -E 's|^elixir/([^\]+)|"\1"|' | sort -u | jq -sc .)
         else
           git fetch origin main
           DIRS_JSON=$(git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort -u | jq -sc .)
