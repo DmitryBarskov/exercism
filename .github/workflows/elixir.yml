@@ -1,16 +1,10 @@
-name: Elixir CI
+name: Elixir CI (changed directories)
 
 on:
-  push:
-    branches: [ "main" ]
-    paths:
-      - "elixir/**"
-      - ".github/workflows/elixir.yml"
   pull_request:
     branches: [ "main" ]
     paths:
       - "elixir/**"
-      - ".github/workflows/elixir.yml"
 
 permissions:
   contents: read
