@@ -20,14 +20,14 @@ jobs:
     name: Determine changed directories
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.dirs }}
     steps:
     - uses: actions/checkout@v7
     - id: set-matrix
       run: |
         git fetch origin main
         DIRS_JSON=$(git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort | uniq | jq -sc .)
-        echo "exercises=$DIRS_JSON" >> "$GITHUB_OUTPUT"
+        echo "dirs=$DIRS_JSON" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build and test
@@ -36,7 +36,7 @@ jobs:
 
     strategy:
       matrix:
-        dir: ${{ fromJSON(needs.diff.outputs.exercises) }}
+        exercise: ${{ fromJSON(needs.diff.outputs.dirs) }}
 
     steps:
     - uses: actions/checkout@v7
@@ -51,9 +51,9 @@ jobs:
         path: deps
         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
-    - name: "Run tests (elixir/${{ matrix.dir }}*/)"
+    - name: "Run tests (elixir/${{ matrix.exercise }}*/)"
       run: |
-        for edir in elixir/${{ matrix.dir }}*/; do
+        for edir in elixir/${{ matrix.exercise }}*/; do
           echo "####################################"
           echo "# Testing '$edir' ... #"
           cd $edir
