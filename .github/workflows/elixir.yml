@@ -23,13 +23,9 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
     - uses: actions/checkout@v7
-      with:
-        fetch-depth: 0
-        sparse-checkout: |
-          .github
-          elixir
     - id: set-matrix
       run: |
+        git fetch main
         git diff --name-only main @ -- * | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort | uniq | jq -s . >> $GITHUB_OUTPUT
 
   build:
