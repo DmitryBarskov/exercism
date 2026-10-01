@@ -24,7 +24,7 @@ jobs:
           DIRS_JSON=$(find elixir/ -maxdepth 1 -mindepth 1 -type d | sed -E 's|^elixir/([^\]+)|"\1"|' | sort -u | jq -sc .)
         else
           git fetch origin main
-          DIRS_JSON=$(git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort -u | jq -sc .)
+          DIRS_JSON=$(git diff --name-only origin/main @ -- elixir/ | sed -nE 's|^elixir/([^/]+)/.+|"\1"|p' | sort -u | jq -sc .)
         fi
         echo "dirs=$DIRS_JSON" >> "$GITHUB_OUTPUT"
 
