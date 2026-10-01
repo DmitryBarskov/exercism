@@ -26,7 +26,7 @@ jobs:
     - id: set-matrix
       run: |
         git fetch origin main
-        git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort | uniq | jq -s .
+        git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort | uniq | jq -sc . >> $GITHUB_OUTPUT
 
   build:
     name: Build and test
