@@ -26,7 +26,8 @@ jobs:
     - id: set-matrix
       run: |
         git fetch origin main
-        git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort | uniq | jq -sc . >> $GITHUB_OUTPUT
+        DIRS_JSON=$(git diff --name-only origin/main @ -- elixir/ | sed -E 's|^elixir/([^/]+)/.+|"\1"|' | sort | uniq | jq -sc .)
+        echo "exercises=$DIRS_JSON" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build and test
@@ -34,7 +35,7 @@ jobs:
     needs: diff
 
     strategy:
-      matrix: ${{ fromJSON(needs.diff.output.matrix) }}
+      matrix: ${{ fromJSON(needs.diff.outputs.exercises) }}
 
     steps:
     - uses: actions/checkout@v7
