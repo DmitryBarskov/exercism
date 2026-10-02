@@ -1700,3 +1700,5 @@ else
 end
 #=> "not a 42: 2"
 ```
+
+## [Anagram](./anagram/README.md)
