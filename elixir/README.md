@@ -1704,3 +1704,5 @@ end
 ## [Anagram](./anagram/README.md)
 
 ## [Darts](./darts/README.md)
+
+## [Pangram](./pangram/README.md)
