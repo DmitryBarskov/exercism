@@ -1708,3 +1708,18 @@ end
 ## [Pangram](./pangram/README.md)
 
 ## [Spiral Matrix](./spiral-matrix/README.md)
+
+`Kernel.inspect` renders some lists as charlists. To avoid it pass `charlists:
+:as_lists` option to it:
+
+```elixir
+inspect([10, 11, 12])
+#=> "~c\"\\n\\v\\f\""
+
+inspect([10, 11, 12], charlists: :as_lists)
+#=> "[10, 11, 12]"
+```
+
+Same thing applies to `IO.inspect`.
+
+## [Nucleotide Count](./nucleotide-count/README.md)
