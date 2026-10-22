@@ -1706,3 +1706,5 @@ end
 ## [Darts](./darts/README.md)
 
 ## [Pangram](./pangram/README.md)
+
+## [Spiral Matrix](./spiral-matrix/README.md)
