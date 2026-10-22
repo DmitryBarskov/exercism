@@ -1708,3 +1708,5 @@ end
 ## [Pangram](./pangram/README.md)
 
 ## [Spiral Matrix](./spiral-matrix/README.md)
+
+## [Nucleotide Count](./nucleotide-count/README.md)
