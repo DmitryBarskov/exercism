@@ -1725,3 +1725,5 @@ Same thing applies to `IO.inspect`.
 ## [Nucleotide Count](./nucleotide-count/README.md)
 
 ## [Series](./series/README.md)
+
+## [Pig Latin](./pig-latin/README.md)
