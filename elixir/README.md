@@ -1723,3 +1723,5 @@ inspect([10, 11, 12], charlists: :as_lists)
 Same thing applies to `IO.inspect`.
 
 ## [Nucleotide Count](./nucleotide-count/README.md)
+
+## [Series](./series/README.md)
