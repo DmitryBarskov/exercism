@@ -1727,3 +1727,5 @@ Same thing applies to `IO.inspect`.
 ## [Series](./series/README.md)
 
 ## [Pig Latin](./pig-latin/README.md)
+
+## [Word Count](./word-count/README.md)
