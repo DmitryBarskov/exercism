@@ -3,4 +3,6 @@
 **/HELP.md linguist-generated
 **/HINTS.md linguist-generated
 */*/README.md linguist-generated
+java/*/build.gradle linguist-generated
 java/*/gradle/wrapper/gradle-wrapper.properties linguist-generated
+java/*/src/test/java/*.java linguist-generated

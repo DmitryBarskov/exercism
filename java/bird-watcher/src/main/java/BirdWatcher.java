@@ -1,4 +1,3 @@
-
 class BirdWatcher {
     private final int[] birdsPerDay;
 
