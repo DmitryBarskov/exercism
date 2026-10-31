@@ -1733,3 +1733,5 @@ Same thing applies to `IO.inspect`.
 ## [Grains](./grains/README.md)
 
 ## [Perfect Numbers](./perfect-numbers/README.md)
+
+## [Meetup](./meetup/README.md)
