@@ -1731,3 +1731,5 @@ Same thing applies to `IO.inspect`.
 ## [Word Count](./word-count/README.md)
 
 ## [Grains](./grains/README.md)
+
+## [Perfect Numbers](./perfect-numbers/README.md)
