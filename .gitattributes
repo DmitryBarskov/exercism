@@ -3,6 +3,13 @@
 **/HELP.md linguist-generated
 **/HINTS.md linguist-generated
 */*/README.md linguist-generated
+
+elixir/*/test/*_test.exs linguist-generated
+elixir/*/test/test_helper.exs linguist-generated
+elixir/*/.formatter.exs linguist-generated
+elixir/*/.gitignore linguist-generated
+elixir/*/mix.exs linguist-generated
+
 java/*/build.gradle linguist-generated
 java/*/gradle/wrapper/gradle-wrapper.properties linguist-generated
 java/*/src/test/java/*.java linguist-generated
