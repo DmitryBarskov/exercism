@@ -1735,3 +1735,5 @@ Same thing applies to `IO.inspect`.
 ## [Perfect Numbers](./perfect-numbers/README.md)
 
 ## [Meetup](./meetup/README.md)
+
+## [Simple Linked List](./simple-linked-list/README.md)
