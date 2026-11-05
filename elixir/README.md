@@ -1737,3 +1737,5 @@ Same thing applies to `IO.inspect`.
 ## [Meetup](./meetup/README.md)
 
 ## [Simple Linked List](./simple-linked-list/README.md)
+
+## [Matching Brackets](./matching-brackets/README.md)
