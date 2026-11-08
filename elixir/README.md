@@ -1741,3 +1741,11 @@ Same thing applies to `IO.inspect`.
 ## [Matching Brackets](./matching-brackets/README.md)
 
 ## [Bottle Song](./bottle-song/README.md)
+
+## [Binary Search](./binary-search/README.md)
+
+## [List Ops](./list-ops/README.md)
+
+## [Line Up](./line-up/README.md)
+
+## [Protein Translation](./protein-translation/README.md)
