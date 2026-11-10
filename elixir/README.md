@@ -1749,3 +1749,5 @@ Same thing applies to `IO.inspect`.
 ## [Line Up](./line-up/README.md)
 
 ## [Protein Translation](./protein-translation/README.md)
+
+## [Prime Factors](./prime-factors/README.md)
