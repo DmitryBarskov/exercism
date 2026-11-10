@@ -1751,3 +1751,47 @@ Same thing applies to `IO.inspect`.
 ## [Protein Translation](./protein-translation/README.md)
 
 ## [Prime Factors](./prime-factors/README.md)
+
+## [Bank Account](./bank-account/README.md)
+
+Processes quick refresher:
+
+Use `spawn` to create an asynchronous process:
+
+```elixir
+new_process = spawn(fn -> Process.sleep(1000) end)
+
+Process.alive?(new_process) #=> true
+Process.sleep(1000)
+Process.alive?(new_process) #=> false
+```
+
+Use `send` and `receive` to communicate to a process.
+
+`receive` blocks execution and waits until the current process receives a
+message.
+
+```elixir
+new_process = spawn(fn ->
+  receive do
+    {:ping, sender_pid} -> send(sender_pid, {:pong, self()})
+  end
+end)
+
+Process.alive?(new_process) #=> true
+
+# the new_process still waits for a specific message, sending anything else
+# won't do anything
+send(new_process, :hello)
+Process.alive?(new_process) #=> true
+
+send(new_process, {:ping, self()})
+
+# the function of the new_process returned and the process stopped
+Process.alive?(new_process) #=> false
+
+# The current process also have a message!
+receive do
+  anything -> anything
+end #=> {:pong, #PID<0.116.0>}
+```
